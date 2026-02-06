@@ -14,7 +14,9 @@ The agent must repeatedly perform the following cycle until all modules in `deve
 A module is considered `Completed` only when:
 *   [x] **Code Implemented**: All features described are implemented in `.go` files.
 *   [x] **Tests Passed**: `go test ./...` passes for the module.
-*   [x] **Coverage Met**: Test coverage is > 70%.
+*   [x] **Coverage Met**: 
+    *   Total module coverage goal is **100%** (minimum allowed is **> 70%**).
+    *   Single function/method coverage must not be lower than **50%**.
 *   [x] **Documentation**: Code is commented according to `author.md` standards.
 
 ## 3. Development Unit Cycle

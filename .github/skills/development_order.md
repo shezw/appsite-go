@@ -8,7 +8,7 @@ This document tracks the development progress of the Appsite Go framework.
 *   **Diff**: Difficulty (Low/Med/High)
 *   **Test**: `_test.go` exists?
 *   **Pass**: Tests strictly passed?
-*   **Cov**: Coverage % (>70% required)
+*   **Cov**: Coverage % (Aim 100%, Min 70%; Single Fun > 50%)
 
 ---
 
@@ -21,8 +21,8 @@ This document tracks the development progress of the Appsite Go framework.
 | 1.2 | `internal/core/log` | `logger.go`<br>`zap.go` | Completed | Structured logging wrapper (Zap implementation recommended). Context-aware logging. | Low | [x] | [x] | 91% |
 | 1.3 | `pkg/utils/file` | `file.go`<br>`check.go` | Completed | File existence check, mkdir, size formatting, mime-type detection. | Low | [x] | [x] | 83% |
 | 1.4 | `pkg/utils/timeconvert` | `time.go` | Completed | Date formatting, parsing, duration helpers, timezone utilities. | Low | [x] | [x] | 92% |
-| 1.5 | `pkg/utils/simpleimage` | `resize.go`<br>`check.go` | In Progress | Basic image resizing, format checking (Validation before upload). | Med | [ ] | [ ] | 0% |
-| 1.6 | `internal/core/setting` | `loader.go`<br>`config.go` | Pending | Configuration struct definitions. Load from YAML/Env. Hot-reload support. | Med | [ ] | [ ] | 0% |
+| 1.5 | `pkg/utils/simpleimage` | `resize.go`<br>`check.go` | Completed | Basic image resizing, format checking (Validation before upload). | Med | [x] | [x] | 77% |
+| 1.6 | `internal/core/setting` | `loader.go`<br>`config.go` | Completed | Configuration struct definitions. Load from YAML/Env. Hot-reload support. | Med | [x] | [x] | 91.7% |
 | 1.7 | `pkg/utils/orm` | `gorm_init.go`<br>`scopes.go` | Pending | GORM (or Ent) initialization config, common scopes (Pagination, SoftDelete). | Med | [ ] | [ ] | 0% |
 | 1.8 | `pkg/utils/redis` | `client.go`<br>`lock.go` | Pending | Redis client init. Distributed lock helper implementation. | Med | [ ] | [ ] | 0% |
 | 1.9 | `internal/core/model` | `base.go`<br>`query.go` | Pending | Base Struct: `ID`, `Created/UpdatedAt`, `DeletedAt`. **SaaS**: Add `TenantID` here for global isolation. | Low | [ ] | [ ] | 0% |
