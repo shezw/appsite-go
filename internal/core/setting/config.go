@@ -29,15 +29,16 @@ type ServerConfig struct {
 }
 
 type DatabaseConfig struct {
-	Type        string `mapstructure:"type"` // mysql, postgres
-	Host        string `mapstructure:"host"`
-	Port        int    `mapstructure:"port"`
-	User        string `mapstructure:"user"`
-	Password    string `mapstructure:"password"`
-	Name        string `mapstructure:"name"`
-	TablePrefix string `mapstructure:"table_prefix"`
-	MaxIdle     int    `mapstructure:"max_idle"`
-	MaxOpen     int    `mapstructure:"max_open"`
+	Type         string `mapstructure:"type"` // mysql, postgres
+	Host         string `mapstructure:"host"`
+	Port         string `mapstructure:"port"` // Changed to string to handle "3306" or 3306 loosely if strictly typed in yaml
+	User         string `mapstructure:"user"`
+	Password     string `mapstructure:"password"`
+	Name         string `mapstructure:"name"`
+	Charset      string `mapstructure:"charset"`
+	TablePrefix  string `mapstructure:"table_prefix"`
+	MaxIdleConns int    `mapstructure:"max_idle_conns"`
+	MaxOpenConns int    `mapstructure:"max_open_conns"`
 }
 
 type RedisConfig struct {
