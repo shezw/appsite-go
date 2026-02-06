@@ -38,8 +38,8 @@ This document tracks the development progress of the Appsite Go framework.
 | 2.2 | `internal/services/access` | `permission/casbin.go` | Completed | **Permission**: RBAC enforcement using Casbin or similar. Policy loader. | High | [x] | [x] | 83% |
 | 2.3 | `internal/services/access` | `verify/otp.go` | Completed | **Verify**: Logic for generating/checking OTP codes (Email/SMS). | Med | [x] | [x] | 90% |
 | 2.4 | `internal/services/access` | `operation/audit.go` | Completed | **Operation**: Structure for recording critical user operations (Audit Logs). | Low | [x] | [x] | 100% |
-| 2.5 | `internal/services/user` | `account/auth.go` | Pending | **Account**: Register (Email/Phone), Login (Pwd), Logout logic. | High | [ ] | [ ] | 0% |
-| 2.6 | `internal/services/user` | `account/password.go` | Pending | **Account**: Password hashing (bcrypt/argon2), change pwd, reset pwd. | Med | [ ] | [ ] | 0% |
+| 2.5 | `internal/services/user` | `account/auth.go` | Completed | **Account**: Register (Email/Phone), Login (Pwd), Logout logic. | High | [x] | [x] | 83% |
+| 2.6 | `internal/services/user` | `account/password.go` | Completed | **Account**: Password hashing (bcrypt/argon2), change pwd, reset pwd. | Med | [x] | [x] | 100% |
 | 2.7 | `internal/services/user` | `info/profile.go` | Pending | **Info**: Profile CRUD (Avatar, Bio, Gender, Birthday). | Low | [ ] | [ ] | 0% |
 | 2.8 | `internal/services/user` | `preference/settings.go`| Pending | **Preference**: User specific configs (Theme, Notif settings). JSON storage? | Low | [ ] | [ ] | 0% |
 | 2.9 | `internal/services/user` | `group/role.go` | Pending | **Group**: User groups/roles association (Admin, Editor, Member). | Med | [ ] | [ ] | 0% |
