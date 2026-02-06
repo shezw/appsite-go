@@ -51,8 +51,8 @@ This document tracks the development progress of the Appsite Go framework.
 
 | ID | Module Path | Feature / File | Status | Description | Diff | Test | Pass | Cov |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| 3.1 | `internal/services/contents` | `category.go` | Pending | Taxonomy tree structure (Parent/Child). | Med | [ ] | [ ] | 0% |
-| 3.2 | `internal/services/contents` | `article.go`<br>`banner.go` | Pending | Standard content CRUD. Publishing status workflow. | Med | [ ] | [ ] | 0% |
+| 3.1 | `internal/services/contents` | `category.go` | Completed | Taxonomy tree structure (Parent/Child). | Med | [x] | [x] | 75% |
+| 3.2 | `internal/services/contents` | `article.go`<br>`banner.go` | In Progress | Standard content CRUD. Publishing status workflow. | Med | [ ] | [ ] | 0% |
 | 3.3 | `internal/services/contents` | `media.go` | Pending | Media library metadata (Links to OSS/Local files). | Low | [ ] | [ ] | 0% |
 | 3.4 | `internal/services/shieldword`| `filter.go` | Pending | Text censoring/filtering logic (Sensitive word replacement). | Med | [ ] | [ ] | 0% |
 | 3.5 | `internal/services/relation` | `follow.go` | Pending | User relationships (Follow/Fan). | Low | [ ] | [ ] | 0% |
