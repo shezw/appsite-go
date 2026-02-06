@@ -16,10 +16,12 @@ type Config struct {
 }
 
 type AppConfig struct {
-	Name      string `mapstructure:"name"`
-	Version   string `mapstructure:"version"`
-	Mode      string `mapstructure:"mode"` // debug, release, test
-	JwtSecret string `mapstructure:"jwt_secret"`
+	Name      string        `mapstructure:"name"`
+	Version   string        `mapstructure:"version"`
+	Mode      string        `mapstructure:"mode"` // debug, release, test
+	JwtSecret string        `mapstructure:"jwt_secret"`
+	JwtExpire time.Duration `mapstructure:"jwt_expire"`
+	JwtIssuer string        `mapstructure:"jwt_issuer"`
 }
 
 type ServerConfig struct {

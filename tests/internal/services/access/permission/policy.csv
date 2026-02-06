@@ -1,0 +1,5 @@
+p, admin, /api/admin/*, read
+p, admin, /api/admin/*, write
+p, member, /api/user/*, read
+g, alice, admin
+g, bob, member
