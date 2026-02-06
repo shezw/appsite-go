@@ -1,0 +1,7 @@
+# Author Configuration Template
+# Copy this file to 'author.md' and fill in your details.
+
+name: Your Name
+alias: your_alias
+email: your_email@example.com
+agent_suffix: 
