@@ -2,23 +2,25 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-package error
+package error_test
 
 import (
 	"errors"
 	"testing"
+
+	kerror "appsite-go/internal/core/error"
 )
 
 func TestErrorCode(t *testing.T) {
 	tests := []struct {
-		code     ErrorCode
+		code     kerror.ErrorCode
 		expected int
 		msg      string
 	}{
-		{Success, 200, "Success"},
-		{InvalidParams, 400, "Invalid Parameters"},
-		{ServerError, 500, "Internal Server Error"},
-		{ErrorCode(999), 999, "Unknown Error"},
+		{kerror.Success, 200, "Success"},
+		{kerror.InvalidParams, 400, "Invalid Parameters"},
+		{kerror.ServerError, 500, "Internal Server Error"},
+		{kerror.ErrorCode(999), 999, "Unknown Error"},
 	}
 
 	for _, tt := range tests {
@@ -33,9 +35,9 @@ func TestErrorCode(t *testing.T) {
 
 func TestAppError(t *testing.T) {
 	// Test New
-	e1 := New(InvalidParams)
-	if e1.Code != InvalidParams {
-		t.Errorf("New() code = %v, want %v", e1.Code, InvalidParams)
+	e1 := kerror.New(kerror.InvalidParams)
+	if e1.Code != kerror.InvalidParams {
+		t.Errorf("New() code = %v, want %v", e1.Code, kerror.InvalidParams)
 	}
 	if e1.Message != "Invalid Parameters" {
 		t.Errorf("New() message = %v, want %v", e1.Message, "Invalid Parameters")
@@ -43,16 +45,16 @@ func TestAppError(t *testing.T) {
 
 	// Test NewWithMessage
 	customMsg := "Custom invalid params"
-	e2 := NewWithMessage(InvalidParams, customMsg)
+	e2 := kerror.NewWithMessage(kerror.InvalidParams, customMsg)
 	if e2.Message != customMsg {
 		t.Errorf("NewWithMessage() message = %v, want %v", e2.Message, customMsg)
 	}
 
 	// Test Wrap
 	baseErr := errors.New("db error")
-	e3 := Wrap(ServerError, baseErr, "Database failed")
-	if e3.Code != ServerError {
-		t.Errorf("Wrap() code = %v, want %v", e3.Code, ServerError)
+	e3 := kerror.Wrap(kerror.ServerError, baseErr, "Database failed")
+	if e3.Code != kerror.ServerError {
+		t.Errorf("Wrap() code = %v, want %v", e3.Code, kerror.ServerError)
 	}
 	if e3.Err != baseErr {
 		t.Errorf("Wrap() err = %v, want %v", e3.Err, baseErr)
@@ -63,7 +65,7 @@ func TestAppError(t *testing.T) {
 
 	// Test WithDetails
 	details := map[string]string{"field": "email"}
-	e4 := New(InvalidParams).WithDetails(details)
+	e4 := kerror.New(kerror.InvalidParams).WithDetails(details)
 	if e4.Details == nil {
 		t.Error("WithDetails() failed to set details")
 	}
@@ -74,15 +76,15 @@ func TestAppError(t *testing.T) {
 		t.Errorf("Error() = %s, want %s", e3.Error(), expectedStr)
 	}
 
-	e5 := New(NotFound)
+	e5 := kerror.New(kerror.NotFound)
 	expectedStr2 := "[404] Not Found"
 	if e5.Error() != expectedStr2 {
 		t.Errorf("Error() = %s, want %s", e5.Error(), expectedStr2)
 	}
 
 	// Test Wrap with empty message
-	e6 := Wrap(Unauthorized, nil, "")
-	if e6.Message != Unauthorized.String() {
-		t.Errorf("Wrap() empty msg = %v, want %v", e6.Message, Unauthorized.String())
+	e6 := kerror.Wrap(kerror.Unauthorized, nil, "")
+	if e6.Message != kerror.Unauthorized.String() {
+		t.Errorf("Wrap() empty msg = %v, want %v", e6.Message, kerror.Unauthorized.String())
 	}
 }

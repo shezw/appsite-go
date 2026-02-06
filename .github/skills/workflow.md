@@ -26,9 +26,11 @@ For each module, strictly follow this sequence:
     *   Add file header from `author.md`.
     *   *Commit*: `feat(module): implement [feature name]`
 3.  **Test Write (Commit)**:
+    *   **Location**: All tests must be placed in the `tests/` directory, mirroring the source structure (e.g., `src/pkg/utils/file.go` -> `tests/pkg/utils/file/file_test.go`).
+    *   **Type**: Use black-box testing (test public interfaces).
     *   Create `_test.go` files.
     *   *Commit*: `test(module): add unit tests for [feature]`
-4.  **Run Test**: Execute `go test -cover -v [path]`.
+4.  **Run Test**: Execute `go test -coverpkg=./... -v ./tests/...`.
 5.  **Refine (Loop)**:
     *   If failed -> Fix code -> *Commit*: `fix(module): resolve test failure [reason]`
     *   If coverage low -> Add cases -> *Commit*: `test(module): improve coverage to [X]%`
