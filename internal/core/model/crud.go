@@ -6,8 +6,6 @@ package model
 
 import (
 	"errors"
-	"fmt"
-	"reflect"
 
 	"gorm.io/gorm"
 	"appsite-go/pkg/utils/orm"
@@ -119,14 +117,10 @@ func (c *CRUD[T]) List(params *ListParams) *Result {
 	db := c.DB.Model(new(T))
 
 	// Apply Filters
-	if params.Filters != nil {
-		// Only simple equality for now; generic query builder to come later
-		for k, v := range params.Filters {
-			// Check if field exists to prevent SQL injection or bad query
-			if hasField(new(T), k) {
-				db = db.Where(fmt.Sprintf("%s = ?", k), v)
-			}
-		}
+	if params.Filters != nil && len(params.Filters) > 0 {
+		// Pass map directly to GORM. 
+		// keys must be column names or GORM handles them if they match columns.
+		db = db.Where(params.Filters)
 	}
 
 	// Count
@@ -151,20 +145,4 @@ func (c *CRUD[T]) List(params *ListParams) *Result {
 		"page":  params.Page,
 		"size":  params.PageSize,
 	}}
-}
-
-// Helper to check struct has field (Case sensitive)
-func hasField(v interface{}, field string) bool {
-	t := reflect.TypeOf(v)
-	if t.Kind() == reflect.Ptr {
-		t = t.Elem()
-	}
-	if t.Kind() != reflect.Struct {
-		return false
-	}
-	_, ok := t.FieldByName(field)
-	// GORM column naming strategy is complex, but for now we assume Request Fields match Struct Fields
-	// Ideally we map JSON tag or Database column. 
-	// This is a naive implementation for the MVP.
-	return ok
 }

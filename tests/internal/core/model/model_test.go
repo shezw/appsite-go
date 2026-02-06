@@ -36,11 +36,18 @@ func (u *UserWithHooks) BeforeAdd(tx *gorm.DB) error {
 }
 func (u *UserWithHooks) AfterAdd(tx *gorm.DB) error { return nil }
 func (u *UserWithHooks) BeforeUpdate(tx *gorm.DB) error {
-    // We can access tx here to check things
+    if u.Name == "FailUpdate" {
+        return errors.New("update blocked")
+    }
 	return nil
 }
 func (u *UserWithHooks) AfterUpdate(tx *gorm.DB) error { return nil }
-func (u *UserWithHooks) BeforeDelete(tx *gorm.DB) error { return nil }
+func (u *UserWithHooks) BeforeDelete(tx *gorm.DB) error {
+    if u.Name == "FailDelete" {
+        return errors.New("delete blocked")
+    }
+    return nil
+}
 func (u *UserWithHooks) AfterDelete(tx *gorm.DB) error { return nil }
 
 
@@ -144,8 +151,47 @@ func TestCRUD_Update(t *testing.T) {
 		t.Error("Update missing should fail")
 	}
 
-	// 3. Update Fail (Wait, how to induce DB error on Updates?)
-	// Hard with sqlite memory unless we table lock or similar.
+	// 3. Hook Fail
+	db.AutoMigrate(&UserWithHooks{})
+	crudHooks := model.NewCRUD[UserWithHooks](db)
+	// Note: We bypass CRUD.Add to avoid "Hooked:" prefix logic for simplicity or just allow it
+	// But we manually create to set the Name exactly to "FailUpdate" which triggers the block.
+	db.Create(&UserWithHooks{Base: model.Base{ID: "hook1"}, Name: "FailUpdate"})
+	
+	res = crudHooks.Update("hook1", map[string]interface{}{"Name": "Valid"})
+	if res.Success {
+		t.Error("Update should have been blocked by hook")
+	}
+	if res.Message != "update blocked" {
+		t.Errorf("Expected 'update blocked', got %s", res.Message)
+	}
+}
+
+func TestCRUD_MultiRow(t *testing.T) {
+	db := setupDB(t)
+	db.AutoMigrate(&User{})
+	crud := model.NewCRUD[User](db)
+
+	users := []*User{
+		{Base: model.Base{ID: "m1"}, Name: "Multi1"},
+		{Base: model.Base{ID: "m2"}, Name: "Multi2"},
+		{Base: model.Base{ID: "m3"}, Name: "Multi3"},
+	}
+
+	// GORM Create supports batch insert for slice, but generic CRUD.Add takes single entity *T.
+	// Users might want a BatchAdd method in CRUD or just loop.
+	// For now, let's verify we can loop Add.
+	for _, u := range users {
+		if res := crud.Add(u); !res.Success {
+			t.Errorf("Failed to add %s", u.Name)
+		}
+	}
+
+	// Verify count
+	res := crud.List(&model.ListParams{})
+	if res.Data.(map[string]interface{})["total"].(int64) != 3 {
+		t.Error("Multi-row insert failed count check")
+	}
 }
 
 func TestCRUD_Remove(t *testing.T) {
@@ -171,6 +217,19 @@ func TestCRUD_Remove(t *testing.T) {
 	res = crud.Remove("999")
 	if res.Success {
 		t.Error("Remove missing should fail")
+	}
+
+	// 3. Hook Fail
+	db.AutoMigrate(&UserWithHooks{})
+	crudHooks := model.NewCRUD[UserWithHooks](db)
+	db.Create(&UserWithHooks{Base: model.Base{ID: "hook_del"}, Name: "FailDelete"})
+	
+	res = crudHooks.Remove("hook_del")
+	if res.Success {
+		t.Error("Remove should have been blocked by hook")
+	}
+	if res.Message != "delete blocked" {
+		t.Errorf("Expected 'delete blocked', got %s", res.Message)
 	}
 }
 
