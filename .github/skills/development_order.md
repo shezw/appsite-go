@@ -25,7 +25,7 @@ This document tracks the development progress of the Appsite Go framework.
 | 1.6 | `internal/core/setting` | `loader.go`<br>`config.go` | Completed | Configuration struct definitions. Load from YAML/Env. Hot-reload support. | Med | [x] | [x] | 91.7% |
 | 1.7 | `pkg/utils/orm` | `gorm_init.go`<br>`scopes.go` | Completed | GORM (or Ent) initialization config, common scopes (Pagination, SoftDelete). | Med | [x] | [x] | 96.7% |
 | 1.8 | `pkg/utils/redis` | `client.go`<br>`lock.go` | Completed | Redis client init. Distributed lock helper implementation. | Med | [x] | [x] | 93.8% |
-| 1.9 | `internal/core/model` | `base.go`<br>`query.go` | Completed | Base Struct: `ID`, `Created/UpdatedAt`, `DeletedAt`. **SaaS**: Add `TenantID` here for global isolation. | Low | [x] | [x] | 80.4% |
+| 1.9 | `internal/core/model` | `base.go`<br>`query.go` | Completed | Base Struct: `ID`, `Created/UpdatedAt`, `DeletedAt`. **SaaS**: Add `TenantID` here for global isolation. | Low | [x] | [x] | 87.2% |
 
 ---
 
@@ -34,10 +34,10 @@ This document tracks the development progress of the Appsite Go framework.
 
 | ID | Module Path | Feature / File | Status | Description | Diff | Test | Pass | Cov |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| 2.1 | `internal/services/access` | `token/jwt.go` | Pending | **Token**: JWT generation, parsing, validation, refresh token logic. | Med | [ ] | [ ] | 0% |
-| 2.2 | `internal/services/access` | `permission/casbin.go` | Pending | **Permission**: RBAC enforcement using Casbin or similar. Policy loader. | High | [ ] | [ ] | 0% |
-| 2.3 | `internal/services/access` | `verify/otp.go` | Pending | **Verify**: Logic for generating/checking OTP codes (Email/SMS). | Med | [ ] | [ ] | 0% |
-| 2.4 | `internal/services/access` | `operation/audit.go` | Pending | **Operation**: Structure for recording critical user operations (Audit Logs). | Low | [ ] | [ ] | 0% |
+| 2.1 | `internal/services/access` | `token/jwt.go` | Completed | **Token**: JWT generation, parsing, validation, refresh token logic. | Med | [x] | [x] | 87% |
+| 2.2 | `internal/services/access` | `permission/casbin.go` | Completed | **Permission**: RBAC enforcement using Casbin or similar. Policy loader. | High | [x] | [x] | 83% |
+| 2.3 | `internal/services/access` | `verify/otp.go` | Completed | **Verify**: Logic for generating/checking OTP codes (Email/SMS). | Med | [x] | [x] | 90% |
+| 2.4 | `internal/services/access` | `operation/audit.go` | Completed | **Operation**: Structure for recording critical user operations (Audit Logs). | Low | [x] | [x] | 100% |
 | 2.5 | `internal/services/user` | `account/auth.go` | Pending | **Account**: Register (Email/Phone), Login (Pwd), Logout logic. | High | [ ] | [ ] | 0% |
 | 2.6 | `internal/services/user` | `account/password.go` | Pending | **Account**: Password hashing (bcrypt/argon2), change pwd, reset pwd. | Med | [ ] | [ ] | 0% |
 | 2.7 | `internal/services/user` | `info/profile.go` | Pending | **Info**: Profile CRUD (Avatar, Bio, Gender, Birthday). | Low | [ ] | [ ] | 0% |

@@ -5,6 +5,9 @@
 package model
 
 import (
+	"strings"
+
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -13,6 +16,18 @@ type Base struct {
 	ID        string `gorm:"primaryKey;type:varchar(32);comment:Unique ID"`
 	CreatedAt int64  `gorm:"autoCreateTime;comment:Creation timestamp (seconds)"`
 	UpdatedAt int64  `gorm:"autoUpdateTime;comment:Last update timestamp (seconds)"`
+}
+
+// BeforeCreate is a GORM hook to generate ID if missing
+func (base *Base) BeforeCreate(tx *gorm.DB) error {
+	if base.ID == "" {
+		// Use UUID, simplified (remove hyphens to fit 32 chars if preferred, or keep 36)
+		// Base says varchar(32). UUID is 36.
+		// So we must strip hyphens.
+		id := uuid.New().String()
+		base.ID = strings.ReplaceAll(id, "-", "")
+	}
+	return nil
 }
 
 // SoftDelete adds soft delete capability.
