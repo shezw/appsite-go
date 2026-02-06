@@ -17,7 +17,7 @@ This document tracks the development progress of the Appsite Go framework.
 
 | ID | Module Path | Feature / File | Status | Description | Diff | Test | Pass | Cov |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| 1.1 | `internal/core/error` | `types.go`<br>`code.go` | Pending | Define `AppError` struct, interfaces, and standardized error codes (e.g., HTTP map). | Low | [ ] | [ ] | 0% |
+| 1.1 | `internal/core/error` | `types.go`<br>`code.go` | Completed | Define `AppError` struct, interfaces, and standardized error codes (e.g., HTTP map). | Low | [x] | [x] | 79% |
 | 1.2 | `internal/core/log` | `logger.go`<br>`zap.go` | Pending | Structured logging wrapper (Zap implementation recommended). Context-aware logging. | Low | [ ] | [ ] | 0% |
 | 1.3 | `pkg/utils/file` | `file.go`<br>`check.go` | Pending | File existence check, mkdir, size formatting, mime-type detection. | Low | [ ] | [ ] | 0% |
 | 1.4 | `pkg/utils/timeconvert` | `time.go` | Pending | Date formatting, parsing, duration helpers, timezone utilities. | Low | [ ] | [ ] | 0% |
