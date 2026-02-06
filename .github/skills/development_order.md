@@ -25,7 +25,7 @@ This document tracks the development progress of the Appsite Go framework.
 | 1.6 | `internal/core/setting` | `loader.go`<br>`config.go` | Completed | Configuration struct definitions. Load from YAML/Env. Hot-reload support. | Med | [x] | [x] | 91.7% |
 | 1.7 | `pkg/utils/orm` | `gorm_init.go`<br>`scopes.go` | Completed | GORM (or Ent) initialization config, common scopes (Pagination, SoftDelete). | Med | [x] | [x] | 96.7% |
 | 1.8 | `pkg/utils/redis` | `client.go`<br>`lock.go` | Completed | Redis client init. Distributed lock helper implementation. | Med | [x] | [x] | 93.8% |
-| 1.9 | `internal/core/model` | `base.go`<br>`query.go` | Pending | Base Struct: `ID`, `Created/UpdatedAt`, `DeletedAt`. **SaaS**: Add `TenantID` here for global isolation. | Low | [ ] | [ ] | 0% |
+| 1.9 | `internal/core/model` | `base.go`<br>`query.go` | Completed | Base Struct: `ID`, `Created/UpdatedAt`, `DeletedAt`. **SaaS**: Add `TenantID` here for global isolation. | Low | [x] | [x] | 80.4% |
 
 ---
 
