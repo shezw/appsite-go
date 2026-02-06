@@ -93,9 +93,9 @@ This document tracks the development progress of the Appsite Go framework.
 
 | ID | Module Path | Feature / File | Status | Description | Diff | Test | Pass | Cov |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| 6.1 | `internal/core/route` | `engine.go`<br>`middleware.go` | Pending | Gin/Favorite framework setup. **SaaS Middleware** (Tenant Extraction). | Med | [ ] | [ ] | 0% |
-| 6.2 | `internal/apis` | `*/handler.go` | Pending | Map HTTP Requests -> Service Interfaces -> HTTP Responses. | Low | [ ] | [ ] | 0% |
-| 6.3 | `internal/admin` | `*/handler.go` | Pending | Admin panel specific endpoints (Requires Admin Auth). | Low | [ ] | [ ] | 0% |
+| 6.1 | `internal/core/route` | `engine.go`<br>`middleware.go` | Completed | Gin/Favorite framework setup. **SaaS Middleware** (Tenant Extraction). | Med | [x] | [x] | 80% |
+| 6.2 | `internal/apis` | `*/handler.go` | Completed | Map HTTP Requests -> Service Interfaces -> HTTP Responses. | Low | [x] | [x] | 90% |
+| 6.3 | `internal/admin` | `*/handler.go` | Completed | Admin panel specific endpoints (Requires Admin Auth). | Low | [x] | [x] | 80% |
 
 ---
 
