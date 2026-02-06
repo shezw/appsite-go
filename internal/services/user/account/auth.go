@@ -5,12 +5,14 @@
 package account
 
 import (
+	"context"
 	"errors"
 
 	"gorm.io/gorm"
 	
 	"appsite-go/internal/core/model"
 	"appsite-go/internal/services/access/token"
+	"appsite-go/internal/services/access/verify"
 	"appsite-go/internal/services/user/entity"
 )
 
@@ -19,6 +21,7 @@ var (
 	ErrUserNotFound  = errors.New("user not found")
 	ErrInvalidPwd    = errors.New("invalid password")
 	ErrUserDisabled  = errors.New("user is disabled")
+	ErrInvalidOTP    = errors.New("invalid otp code")
 )
 
 // AuthService handles authentication
@@ -27,19 +30,21 @@ type AuthService struct {
 	repo     *model.CRUD[entity.User]
 	pwd      *PasswordService
 	tokenSvc *token.Service
+	otpSvc   *verify.OTPService
 }
 
 // NewAuthService creates a new auth service
-func NewAuthService(db *gorm.DB, tokenSvc *token.Service) *AuthService {
+func NewAuthService(db *gorm.DB, tokenSvc *token.Service, otpSvc *verify.OTPService) *AuthService {
 	// Auto migrate
 	if db != nil {
-		_ = db.AutoMigrate(&entity.User{})
+		_ = db.AutoMigrate(&entity.User{}, &entity.UserInfo{}, &entity.UserGroup{}, &entity.UserPreference{})
 	}
 	return &AuthService{
 		db:       db,
 		repo:     model.NewCRUD[entity.User](db),
 		pwd:      NewPasswordService(),
 		tokenSvc: tokenSvc,
+		otpSvc:   otpSvc,
 	}
 }
 
@@ -121,4 +126,47 @@ func (s *AuthService) Login(identifier, password string) (string, *entity.User, 
 	}
 
 	return tokenStr, user, nil
+}
+
+// LoginByOTP logs in using mobile/email + OTP
+func (s *AuthService) LoginByOTP(ctx context.Context, target, code string) (string, *entity.User, error) {
+	// 1. Verify OTP
+	if !s.otpSvc.Check(ctx, target, code) {
+		return "", nil, ErrInvalidOTP
+	}
+
+	// 2. Find User (Mobile or Email)
+	user := &entity.User{}
+	err := s.db.Where("mobile = ? OR email = ?", target, target).First(user).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			// Optional: Auto-register logic could be placed here? 
+			// For now, strict login
+			return "", nil, ErrUserNotFound
+		}
+		return "", nil, err
+	}
+
+	// 3. Status Check
+	if user.Status != "enabled" {
+		return "", nil, ErrUserDisabled
+	}
+
+	// 4. Token
+	tokenStr, err := s.tokenSvc.GenerateToken(user.ID, user.GroupID)
+	if err != nil {
+		return "", nil, err
+	}
+
+	return tokenStr, user, nil
+}
+
+// RegisterByMobile registers a new user with mobile
+func (s *AuthService) RegisterByMobile(mobile, password string) (*entity.User, error) {
+	return s.Register(RegisterInput{
+		Mobile:   mobile,
+		Password: password,
+		Username: "m_" + mobile, // Auto-gen username
+		Nickname: "User_" + mobile[len(mobile)-4:], // Suffix
+	})
 }

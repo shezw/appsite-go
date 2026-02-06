@@ -5,16 +5,21 @@
 package account_test
 
 import (
+	"context"
 	"testing"
 	"time"
 
+	"github.com/alicebob/miniredis/v2"
+	"github.com/redis/go-redis/v9"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	
 	"appsite-go/internal/core/setting"
 	"appsite-go/internal/services/access/token"
+	"appsite-go/internal/services/access/verify"
 	"appsite-go/internal/services/user/account"
 )
+
 
 func setupDB(t *testing.T) *gorm.DB {
 	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
@@ -24,18 +29,27 @@ func setupDB(t *testing.T) *gorm.DB {
 	return db
 }
 
-func setupAuthService(t *testing.T, db *gorm.DB) *account.AuthService {
+func setupAuthComponents(t *testing.T, db *gorm.DB) (*account.AuthService, *verify.OTPService) {
+	// Redis setup
+	s, err := miniredis.Run()
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(s.Close)
+	rdb := redis.NewClient(&redis.Options{Addr: s.Addr()})
+	otpSvc := verify.NewOTPService(rdb)
+
 	cfg := setting.AppConfig{
 		JwtSecret: "test_secret",
 		JwtExpire: time.Hour,
 	}
 	tokenSvc := token.NewService(cfg)
-	return account.NewAuthService(db, tokenSvc)
+	return account.NewAuthService(db, tokenSvc, otpSvc), otpSvc
 }
 
 func TestRegisterAndLogin(t *testing.T) {
 	db := setupDB(t)
-	svc := setupAuthService(t, db)
+	svc, _ := setupAuthComponents(t, db)
 
 	input := account.RegisterInput{
 		Username: "alice",
@@ -93,5 +107,45 @@ func TestRegisterAndLogin(t *testing.T) {
 	_, _, err = svc.Login("alice", "password123")
 	if err != account.ErrUserDisabled {
 		t.Error("Expected ErrUserDisabled")
+	}
+}
+
+func TestOTPLogin(t *testing.T) {
+	db := setupDB(t)
+	svc, otp := setupAuthComponents(t, db)
+	ctx := context.Background()
+
+	// Register a user
+	svc.Register(account.RegisterInput{
+		Mobile: "13800000000",
+		Password: "password",
+	})
+	
+	// Generate OTP
+	code, _ := otp.Generate(ctx, "13800000000", 6, time.Minute)
+	
+	// Valid Access
+	_, _, err := svc.LoginByOTP(ctx, "13800000000", code)
+	if err != nil {
+		t.Errorf("OTP Login failed: %v", err)
+	}
+	
+	// Invalid Code
+	_, _, err = svc.LoginByOTP(ctx, "13800000000", "000000")
+	if err != account.ErrInvalidOTP {
+		t.Errorf("Expected invalid OTP, got %v", err)
+	}
+}
+
+func TestRegisterMobile(t *testing.T) {
+	db := setupDB(t)
+	svc, _ := setupAuthComponents(t, db)
+	
+	u, err := svc.RegisterByMobile("13912345678", "pass")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if u.Username != "m_13912345678" {
+		t.Error("Username generation failed")
 	}
 }
