@@ -1,0 +1,30 @@
+app:
+  name: "appsite-monolith"
+  version: "1.0.0"
+  mode: "debug" # debug, release, test
+  jwt_secret: "your_super_secret_key_change_me"
+  jwt_expire: "24h"
+  jwt_issuer: "appsite-go"
+
+server:
+  port: 8080
+  read_timeout: "60s"
+  write_timeout: "60s"
+
+database:
+  type: "mysql"
+  host: "127.0.0.1"
+  port: "3306"
+  user: "root"
+  password: "password"
+  name: "appsite_db"
+  charset: "utf8mb4"
+
+redis:
+  addr: "127.0.0.1:6379"
+  password: ""
+  db: 0
+
+log:
+  level: "debug"
+  format: "console" # json or console

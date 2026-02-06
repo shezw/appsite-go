@@ -104,4 +104,4 @@ This document tracks the development progress of the Appsite Go framework.
 
 | ID | Module Path | Feature / File | Status | Description | Diff | Test | Pass | Cov |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| 7.1 | `cmd/appsite-monolith` | `main.go` | Pending | Dependency Injection (Wire). Start HTTP Server. | Med | [ ] | [ ] | 0% |
+| 7.1 | `cmd/appsite-monolith` | `main.go` | Completed | Dependency Injection (Wire). Start HTTP Server. | Med | [x] | [x] | 0% |
