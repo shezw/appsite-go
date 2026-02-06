@@ -59,17 +59,33 @@ func TestBanner_CRUD(t *testing.T) {
 		t.Errorf("Expected title 'Home Banner Updated', got %s", fetchedAfterUpdate.Title)
 	}
 
-	// 4. Increment Click
+	// 4. Increment Click & View
 	if err := svc.IncrementClick(banner.ID); err != nil {
 		t.Fatalf("Failed to increment click: %v", err)
+	}
+	if err := svc.IncrementView(banner.ID); err != nil {
+		t.Fatalf("Failed to increment view: %v", err)
 	}
 	
 	fetchedAfterClick, _ := svc.Get(banner.ID)
 	if fetchedAfterClick.ClickTimes != 1 {
 		t.Errorf("Expected ClickTimes 1, got %d", fetchedAfterClick.ClickTimes)
 	}
+	if fetchedAfterClick.ViewTimes != 1 {
+		t.Errorf("Expected ViewTimes 1, got %d", fetchedAfterClick.ViewTimes)
+	}
 
-	// 5. Delete
+	// 5. List
+	svc.Create(&entity.Banner{Title: "Banner 2", Status: "enabled"})
+	list, _, err := svc.List(1, 10, map[string]interface{}{"status": "enabled"})
+	if err != nil {
+		t.Fatalf("Failed to list: %v", err)
+	}
+	if len(list) < 2 {
+		t.Errorf("Expected at least 2 banners, got %d", len(list))
+	}
+
+	// 6. Delete
 	if err := svc.Delete(banner.ID); err != nil {
 		t.Fatalf("Failed to delete banner: %v", err)
 	}

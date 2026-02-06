@@ -83,3 +83,52 @@ func TestCategory_Tree(t *testing.T) {
 		t.Errorf("Grandchild title mismatch")
 	}
 }
+
+func TestCategory_CRUD(t *testing.T) {
+	db := setupDB(t)
+	svc := contents.NewCategoryService(db)
+
+	cat := &entity.Category{
+		Title: "Test Cat",
+		// Code field removed
+		Status: "enabled",
+	}
+
+	// 1. Create
+	if err := svc.Create(cat); err != nil {
+		t.Fatalf("Failed to create: %v", err)
+	}
+	if cat.ID == "" {
+		t.Error("ID not generated")
+	}
+
+	// 2. Get
+	got, err := svc.Get(cat.ID)
+	if err != nil {
+		t.Fatalf("Failed to get: %v", err)
+	}
+	if got.Title != "Test Cat" {
+		t.Errorf("Title mismatch")
+	}
+
+	// 3. Update
+	cat.Title = "Updated Cat"
+	if err := svc.Update(cat.ID, map[string]interface{}{"title": "Updated Cat"}); err != nil {
+		t.Fatalf("Failed to update: %v", err)
+	}
+
+	// 4. List
+	svc.Create(&entity.Category{Title: "Another Cat", Status: "enabled"})
+	list, _, err := svc.List(1, 10, nil)
+	if err != nil {
+		t.Fatalf("Failed to list: %v", err)
+	}
+	if len(list) < 2 {
+		t.Errorf("Expected at least 2 categories, got %d", len(list))
+	}
+
+	// 5. Delete
+	if err := svc.Delete(cat.ID); err != nil {
+		t.Fatalf("Failed to delete: %v", err)
+	}
+}

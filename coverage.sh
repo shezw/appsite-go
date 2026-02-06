@@ -1,0 +1,3 @@
+#!/bin/bash
+go test -coverpkg=./internal/services/... -coverprofile=coverage.out ./tests/internal/services/...
+go tool cover -func=coverage.out

@@ -4,6 +4,10 @@
 
 package entity
 
+import (
+	"appsite-go/internal/core/model"
+)
+
 // UserInfo represents extended user details
 // Maps to table 'user_info'
 type UserInfo struct {
@@ -41,9 +45,7 @@ func (UserInfo) TableName() string {
 // UserGroup represents user roles/groups
 // Maps to table 'user_group'
 type UserGroup struct {
-	ID          string `gorm:"primaryKey;size:32"`
-	CreatedAt   int64  `gorm:"autoCreateTime"`
-	UpdatedAt   int64  `gorm:"autoUpdateTime"`
+	model.Base
 	
 	ParentID    string `gorm:"size:32;default:'0';index"`
 	Type        string `gorm:"size:32"`
@@ -64,9 +66,7 @@ func (UserGroup) TableName() string {
 // UserPreference represents key-value user settings
 // Maps to table 'user_preference'
 type UserPreference struct {
-	ID        string `gorm:"primaryKey;size:32"`
-	CreatedAt int64  `gorm:"autoCreateTime"`
-	UpdatedAt int64  `gorm:"autoUpdateTime"`
+	model.Base
 	
 	UserID    string `gorm:"size:32;index"`
 	SaasID    string `gorm:"size:32;index"`

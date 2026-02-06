@@ -40,9 +40,9 @@ This document tracks the development progress of the Appsite Go framework.
 | 2.4 | `internal/services/access` | `operation/audit.go` | Completed | **Operation**: Structure for recording critical user operations (Audit Logs). | Low | [x] | [x] | 100% |
 | 2.5 | `internal/services/user` | `account/auth.go` | Completed | **Account**: Register (Email/Phone), Login (Pwd), Logout logic. | High | [x] | [x] | 83% |
 | 2.6 | `internal/services/user` | `account/password.go` | Completed | **Account**: Password hashing (bcrypt/argon2), change pwd, reset pwd. | Med | [x] | [x] | 100% |
-| 2.7 | `internal/services/user` | `info/profile.go` | Completed | **Info**: Profile CRUD (Avatar, Bio, Gender, Birthday). | Low | [ ] | [ ] | 0% |
-| 2.8 | `internal/services/user` | `preference/settings.go`| Completed | **Preference**: User specific configs (Theme, Notif settings). JSON storage? | Low | [ ] | [ ] | 0% |
-| 2.9 | `internal/services/user` | `group/role.go` | Completed | **Group**: User groups/roles association (Admin, Editor, Member). | Med | [ ] | [ ] | 0% |
+| 2.7 | `internal/services/user` | `info/profile.go` | Completed | **Info**: Profile CRUD (Avatar, Bio, Gender, Birthday). | Low | [x] | [x] | 95% |
+| 2.8 | `internal/services/user` | `preference/settings.go`| Completed | **Preference**: User specific configs (Theme, Notif settings). JSON storage? | Low | [x] | [x] | 92% |
+| 2.9 | `internal/services/user` | `group/role.go` | Completed | **Group**: User groups/roles association (Admin, Editor, Member). | Med | [x] | [x] | 93% |
 
 ---
 
@@ -51,13 +51,13 @@ This document tracks the development progress of the Appsite Go framework.
 
 | ID | Module Path | Feature / File | Status | Description | Diff | Test | Pass | Cov |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| 3.1 | `internal/services/contents` | `category.go` | Completed | Taxonomy tree structure (Parent/Child). | Med | [x] | [x] | 75% |
-| 3.2 | `internal/services/contents` | `article.go`<br>`banner.go` | In Progress | Standard content CRUD. Publishing status workflow. | Med | [ ] | [ ] | 0% |
-| 3.3 | `internal/services/contents` | `media.go` | Pending | Media library metadata (Links to OSS/Local files). | Low | [ ] | [ ] | 0% |
-| 3.4 | `internal/services/shieldword`| `filter.go` | Pending | Text censoring/filtering logic (Sensitive word replacement). | Med | [ ] | [ ] | 0% |
-| 3.5 | `internal/services/relation` | `follow.go` | Pending | User relationships (Follow/Fan). | Low | [ ] | [ ] | 0% |
-| 3.6 | `internal/services/message` | `notification.go` | Pending | In-app notification creation and reading status. | Med | [ ] | [ ] | 0% |
-| 3.7 | `internal/services/form` | `schema.go`<br>`submission.go` | Pending | **Custom Forms**: JSON Schema definition and generic submission handling. | High | [ ] | [ ] | 0% |
+| 3.1 | `internal/services/contents` | `category.go` | Completed | Taxonomy tree structure (Parent/Child). | Med | [x] | [x] | 90% |
+| 3.2 | `internal/services/contents` | `article.go`<br>`banner.go` | Completed | Standard content CRUD. Publishing status workflow. | Med | [x] | [x] | 94% |
+| 3.3 | `internal/services/contents` | `media.go` | Completed | Media library metadata (Links to OSS/Local files). | Low | [x] | [x] | 97% |
+| 3.4 | `internal/services/shieldword`| `filter.go` | Completed | Text censoring/filtering logic (Sensitive word replacement). | Med | [x] | [x] | 92% |
+| 3.5 | `internal/services/relation` | `follow.go` | Completed | User relationships (Follow/Fan). | Low | [x] | [x] | 88% |
+| 3.6 | `internal/services/message` | `notification.go` | Completed | In-app notification creation and reading status. | Med | [x] | [x] | 95% |
+| 3.7 | `internal/services/form` | `schema.go`<br>`submission.go` | Completed | **Custom Forms**: JSON Schema definition and generic submission handling. | High | [x] | [x] | 91% |
 
 ---
 
@@ -66,14 +66,14 @@ This document tracks the development progress of the Appsite Go framework.
 
 | ID | Module Path | Feature / File | Status | Description | Diff | Test | Pass | Cov |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| 4.1 | `internal/services/world` | `saas/tenant.go` | Pending | **SaaS**: Tenant existence, domain resolution, and configuration. | Med | [ ] | [ ] | 0% |
-| 4.2 | `internal/services/commerce`| `product/sku.go` | Pending | Product SPUs (Display) and SKUs (Stock keeping units). | High | [ ] | [ ] | 0% |
-| 4.3 | `internal/services/commerce`| `stock/inventory.go` | Pending | Inventory management (Deduct/Restore mechanisms). | High | [ ] | [ ] | 0% |
-| 4.4 | `internal/services/commerce`| `coupon/rule.go` | Pending | Coupon distribution and validity rules. | Med | [ ] | [ ] | 0% |
-| 4.5 | `internal/services/commerce`| `writeoff/verify.go` | Pending | **Verification**: QR Code/Code verification logic for offline usage. | Med | [ ] | [ ] | 0% |
-| 4.6 | `internal/services/commerce`| `order/fsm.go` | Pending | Order State Machine (Created -> Paid -> Shipped -> Completed). | High | [ ] | [ ] | 0% |
-| 4.7 | `internal/services/user` | `pocket/assets.go` | Pending | **User Wallet**: Aggregated view of Points/Coupons (No Cash top-up). | Med | [ ] | [ ] | 0% |
-| 4.8 | `internal/services/finance` | `ledger.go` | Pending | **Finance**: Transaction logs (`Deals`) and Point history. | Med | [ ] | [ ] | 0% |
+| 4.1 | `internal/services/world` | `saas/tenant.go` | Completed | **SaaS**: Tenant existence, domain resolution, and configuration. | Med | [x] | [x] | 87% |
+| 4.2 | `internal/services/commerce`| `product/sku.go` | Completed | Product SPUs (Display) and SKUs (Stock keeping units). | High | [x] | [x] | 86% |
+| 4.3 | `internal/services/commerce`| `stock/inventory.go` | Completed | Inventory management (Deduct/Restore mechanisms). | High | [x] | [x] | 70% |
+| 4.4 | `internal/services/commerce`| `coupon/rule.go` | Completed | Coupon distribution and validity rules. | Med | [x] | [x] | 76% |
+| 4.5 | `internal/services/commerce`| `writeoff/verify.go` | Completed | **Verification**: QR Code/Code verification logic for offline usage. | Med | [x] | [x] | 100% |
+| 4.6 | `internal/services/commerce`| `order/fsm.go` | Completed | Order State Machine (Created -> Paid -> Shipped -> Completed). | High | [x] | [x] | 100% |
+| 4.7 | `internal/services/user` | `pocket/assets.go` | Completed | **User Wallet**: Aggregated view of Points/Coupons (No Cash top-up). | Med | [x] | [x] | 100% |
+| 4.8 | `internal/services/finance` | `ledger.go` | Completed | **Finance**: Transaction logs (`Deals`) and Point history. | Med | [x] | [x] | 91.4% |
 
 ---
 
@@ -82,9 +82,9 @@ This document tracks the development progress of the Appsite Go framework.
 
 | ID | Module Path | Feature / File | Status | Description | Diff | Test | Pass | Cov |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| 5.1 | `pkg/extra/cloudstorage` | `uploader.go` | Pending | Cloud implementations (AliyunOSS/AWS S3) for `SimpleUploader`. | Med | [ ] | [ ] | 0% |
-| 5.2 | `pkg/extra/sms` | `sender.go` | Pending | SMS Provider integration (Aliyun/Twilio). | Low | [ ] | [ ] | 0% |
-| 5.3 | `pkg/thirdparty` | `payment/pay.go` | Pending | Unified Payment Interface. Adapters for WeChat/Stripe. | High | [ ] | [ ] | 0% |
+| 5.1 | `pkg/extra/cloudstorage` | `uploader.go` | Completed | Cloud implementations (AliyunOSS/AWS S3) for `SimpleUploader`. | Med | [x] | [x] | 90% |
+| 5.2 | `pkg/extra/sms` | `sender.go` | Completed | SMS Provider integration (Aliyun/Twilio). | Low | [x] | [x] | 100% |
+| 5.3 | `pkg/thirdparty` | `payment/pay.go` | Completed | Unified Payment Interface. Adapters for WeChat/Stripe. | High | [x] | [x] | 100% |
 
 ---
 

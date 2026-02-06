@@ -59,7 +59,17 @@ func TestTag_CRUD(t *testing.T) {
 		t.Errorf("Expected title 'Go Language', got %s", fetchedAfterUpdate.Title)
 	}
 
-	// 4. Delete
+	// 4. List
+	svc.Create(&entity.Tag{Title: "Java", Status: "enabled"})
+	list, _, err := svc.List(1, 10, nil)
+	if err != nil {
+		t.Fatalf("Failed to list: %v", err)
+	}
+	if len(list) < 2 {
+		t.Errorf("Expected at least 2 tags, got %d", len(list))
+	}
+
+	// 5. Delete
 	if err := svc.Delete(tag.ID); err != nil {
 		t.Fatalf("Failed to delete tag: %v", err)
 	}

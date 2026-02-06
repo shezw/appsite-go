@@ -34,6 +34,27 @@ func (s *CategoryService) Create(cat *entity.Category) error {
 	return res.Error
 }
 
+// Update modifies an existing category
+func (s *CategoryService) Update(id string, updates map[string]interface{}) error {
+	res := s.repo.Update(id, updates)
+	return res.Error
+}
+
+// Delete removes a category
+func (s *CategoryService) Delete(id string) error {
+	res := s.repo.Remove(id)
+	return res.Error
+}
+
+// Get retrieves a category by ID
+func (s *CategoryService) Get(id string) (*entity.Category, error) {
+	res := s.repo.Get(id)
+	if !res.Success {
+		return nil, res.Error
+	}
+	return res.Data.(*entity.Category), nil
+}
+
 // List returns categories with filters
 func (s *CategoryService) List(page, size int, filters map[string]interface{}) ([]entity.Category, int64, error) {
 	res := s.repo.List(&model.ListParams{

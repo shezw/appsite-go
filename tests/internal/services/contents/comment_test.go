@@ -62,7 +62,17 @@ func TestComment_CRUD(t *testing.T) {
 		t.Errorf("Expected content 'Updated content', got %s", fetchedAfterUpdate.Content)
 	}
 
-	// 4. Delete
+	// 4. List
+	svc.Create(&entity.Comment{Content: "Another comment", Status: "approved"})
+	list, _, err := svc.List(1, 10, nil)
+	if err != nil {
+		t.Fatalf("Failed to list: %v", err)
+	}
+	if len(list) < 2 {
+		t.Errorf("Expected at least 2 comments, got %d", len(list))
+	}
+
+	// 5. Delete
 	if err := svc.Delete(comment.ID); err != nil {
 		t.Fatalf("Failed to delete comment: %v", err)
 	}

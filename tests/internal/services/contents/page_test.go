@@ -69,7 +69,17 @@ func TestPage_CRUD(t *testing.T) {
 		t.Errorf("Expected ViewTimes 1, got %d", fetchedAfterView.ViewTimes)
 	}
 
-	// 5. Delete
+	// 5. List
+	svc.Create(&entity.Page{Title: "Page 2", Alias: "p2", Status: "enabled"})
+	list, _, err := svc.List(1, 10, map[string]interface{}{"status": "enabled"})
+	if err != nil {
+		t.Fatalf("Failed to list: %v", err)
+	}
+	if len(list) < 2 {
+		t.Errorf("Expected at least 2 pages, got %d", len(list))
+	}
+
+	// 6. Delete
 	if err := svc.Delete(page.ID); err != nil {
 		t.Fatalf("Failed to delete page: %v", err)
 	}
