@@ -19,7 +19,7 @@ This document tracks the development progress of the Appsite Go framework.
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
 | 1.1 | `internal/core/error` | `types.go`<br>`code.go` | Completed | Define `AppError` struct, interfaces, and standardized error codes (e.g., HTTP map). | Low | [x] | [x] | 79% |
 | 1.2 | `internal/core/log` | `logger.go`<br>`zap.go` | Completed | Structured logging wrapper (Zap implementation recommended). Context-aware logging. | Low | [x] | [x] | 91% |
-| 1.3 | `pkg/utils/file` | `file.go`<br>`check.go` | Pending | File existence check, mkdir, size formatting, mime-type detection. | Low | [ ] | [ ] | 0% |
+| 1.3 | `pkg/utils/file` | `file.go`<br>`check.go` | In Progress | File existence check, mkdir, size formatting, mime-type detection. | Low | [ ] | [ ] | 0% |
 | 1.4 | `pkg/utils/timeconvert` | `time.go` | Pending | Date formatting, parsing, duration helpers, timezone utilities. | Low | [ ] | [ ] | 0% |
 | 1.5 | `pkg/utils/simpleimage` | `resize.go`<br>`check.go` | Pending | Basic image resizing, format checking (Validation before upload). | Med | [ ] | [ ] | 0% |
 | 1.6 | `internal/core/setting` | `loader.go`<br>`config.go` | Pending | Configuration struct definitions. Load from YAML/Env. Hot-reload support. | Med | [ ] | [ ] | 0% |
