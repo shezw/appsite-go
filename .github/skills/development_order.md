@@ -26,6 +26,7 @@ This document tracks the development progress of the Appsite Go framework.
 | 1.7 | `pkg/utils/orm` | `gorm_init.go`<br>`scopes.go` | Completed | GORM (or Ent) initialization config, common scopes (Pagination, SoftDelete). | Med | [x] | [x] | 96.7% |
 | 1.8 | `pkg/utils/redis` | `client.go`<br>`lock.go` | Completed | Redis client init. Distributed lock helper implementation. | Med | [x] | [x] | 93.8% |
 | 1.9 | `internal/core/model` | `base.go`<br>`query.go` | Completed | Base Struct: `ID`, `Created/UpdatedAt`, `DeletedAt`. **SaaS**: Add `TenantID` here for global isolation. | Low | [x] | [x] | 87.2% |
+| 1.10| `pkg/utils/i18n` | `i18n.go` | Completed | **I18n**: Internationalization support (based on Viper/YAML). | Low | [x] | [x] | 100% |
 
 ---
 
@@ -88,20 +89,33 @@ This document tracks the development progress of the Appsite Go framework.
 
 ---
 
-## Phase 6: Presentation (HTTP)
-*Goal: Routing and JSON APIs.*
+## Phase 6: Presentation (APIS)
+*Goal: Public/User-facing JSON APIs.*
 
 | ID | Module Path | Feature / File | Status | Description | Diff | Test | Pass | Cov |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| 6.1 | `internal/core/route` | `engine.go`<br>`middleware.go` | Completed | Gin/Favorite framework setup. **SaaS Middleware** (Tenant Extraction). | Med | [x] | [x] | 80% |
-| 6.2 | `internal/apis` | `*/handler.go` | Completed | Map HTTP Requests -> Service Interfaces -> HTTP Responses. | Low | [x] | [x] | 90% |
-| 6.3 | `internal/admin` | `*/handler.go` | Completed | Admin panel specific endpoints (Requires Admin Auth). | Low | [x] | [x] | 80% |
+| 6.1 | `internal/core/route` | `engine.go`<br>`middleware.go` | Completed | Gin Framework setup, SaaS Middleware, Logger Middleware. | Med | [x] | [x] | 80% |
+| 6.2 | `internal/apis/auth` | `handler.go` | Completed | **Auth**: Login (Pwd/Bypass), Register, Change Password. | Low | [x] | [x] | 90% |
+| 6.3 | `internal/apis/account`| `handler.go` | Pending | **Account**: Update Profile, Get Detail, List. | Low | [ ] | [ ] | 0% |
+| 6.4 | `internal/apis/content`| `handler.go` | Pending | **Content**: Article/Banner CRUD. | Med | [ ] | [ ] | 0% |
+| 6.5 | `internal/apis/redirect`| `handler.go` | Pending | **Redirect**: WeChat Login, OSS Callback. | Med | [ ] | [ ] | 0% |
+
+## Phase 7: Presentation (Admin)
+*Goal: Admin Management Panel APIs.*
+
+| ID | Module Path | Feature / File | Status | Description | Diff | Test | Pass | Cov |
+|:---|:---|:---|:---|:---|:---|:---|:---|:---|
+| 7.1 | `internal/admin/auth` | `handler.go` | Completed | **Admin Auth**: Login. | Low | [x] | [x] | 80% |
+| 7.2 | `internal/admin/user` | `handler.go` | Pending | **User**: Manage Users (List, Detail, Ban). | Med | [ ] | [ ] | 0% |
+| 7.3 | `internal/admin/contents`| `handler.go` | Pending | **Content**: Manage Articles, Categories. | Med | [ ] | [ ] | 0% |
+| 7.4 | `internal/admin/commerce`| `handler.go` | Pending | **Commerce**: Product, Order, Coupons. | High | [ ] | [ ] | 0% |
+| 7.5 | `internal/admin/system` | `handler.go` | Pending | **System**: Config, Database, Install. | Med | [ ] | [ ] | 0% |
 
 ---
 
-## Phase 7: Assembly
+## Phase 8: Assembly
 *Goal: Application Entry.*
 
 | ID | Module Path | Feature / File | Status | Description | Diff | Test | Pass | Cov |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| 7.1 | `cmd/appsite-monolith` | `main.go` | Completed | Dependency Injection (Wire). Start HTTP Server. | Med | [x] | [x] | 0% |
+| 8.1 | `cmd/appsite-monolith` | `main.go` | Completed | Dependency Injection (Wire). Start HTTP Server. | Med | [x] | [x] | 0% |

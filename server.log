@@ -1,0 +1,116 @@
+{"level":"INFO","ts":"2026-02-07T16:13:44.303+0800","caller":"log/logger.go:48","msg":"Starting Appsite Monolith..."}
+{"level":"INFO","ts":"2026-02-07T16:13:44.304+0800","caller":"log/logger.go:48","msg":"Database connected"}
+{"level":"INFO","ts":"2026-02-07T16:13:44.305+0800","caller":"log/logger.go:48","msg":"Redis connected"}
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.098ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="user_account"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.089ms] [34;1m[rows:5][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "user_account" AND sql IS NOT NULL order by type = "table" desc
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.025ms] [34;1m[rows:-][0m SELECT * FROM `user_account` LIMIT 1
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.020ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "user_account" AND name = "idx_user_account_saas_id"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.014ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "user_account" AND name = "idx_user_account_username"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.018ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "user_account" AND name = "idx_user_account_email"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.022ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "user_account" AND name = "idx_user_account_mobile"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.012ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="user_info"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.056ms] [34;1m[rows:6][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "user_info" AND sql IS NOT NULL order by type = "table" desc
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.018ms] [34;1m[rows:-][0m SELECT * FROM `user_info` LIMIT 1
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.016ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "user_info" AND name = "idx_user_info_wechat_id"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.013ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "user_info" AND name = "idx_user_info_weibo_id"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.011ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "user_info" AND name = "idx_user_info_qq_id"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.011ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "user_info" AND name = "idx_user_info_apple_uuid"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.011ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "user_info" AND name = "idx_user_info_device_id"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.009ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="user_group"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.058ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "user_group" AND sql IS NOT NULL order by type = "table" desc
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.022ms] [34;1m[rows:-][0m SELECT * FROM `user_group` LIMIT 1
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.015ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "user_group" AND name = "idx_user_group_parent_id"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.010ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="user_preference"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.042ms] [34;1m[rows:4][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "user_preference" AND sql IS NOT NULL order by type = "table" desc
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.015ms] [34;1m[rows:-][0m SELECT * FROM `user_preference` LIMIT 1
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.015ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "user_preference" AND name = "idx_user_preference_user_id"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.012ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "user_preference" AND name = "idx_user_preference_saas_id"
+
+2026/02/07 16:13:44 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:41
+[0m[33m[0.011ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "user_preference" AND name = "idx_user_preference_key_id"
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/auth/register     --> appsite-go/internal/apis/auth.(*Handler).Register-fm (5 handlers)
+[GIN-debug] POST   /api/v1/auth/login        --> appsite-go/internal/apis/auth.(*Handler).Login-fm (5 handlers)
+[GIN-debug] GET    /api/v1/account/profile   --> appsite-go/internal/apis/account.(*Handler).GetProfile-fm (6 handlers)
+[GIN-debug] PUT    /api/v1/account/profile   --> appsite-go/internal/apis/account.(*Handler).UpdateProfile-fm (6 handlers)
+{"level":"INFO","ts":"2026-02-07T16:13:44.308+0800","caller":"log/logger.go:48","msg":"Server listening","addr":":8080"}
+{"level":"WARN","ts":"2026-02-07T16:13:45.315+0800","caller":"log/logger.go:54","msg":"HTTP Request","status":404,"method":"GET","path":"/","query":"","ip":"::1","user-agent":"curl/8.5.0","cost":0.000007341}
+
+2026/02/07 16:13:45 [32m/home/javis/dev/appsite-go/internal/services/user/account/service.go:52
+[0m[33m[0.135ms] [34;1m[rows:1][0m SELECT count(*) FROM `user_account` WHERE username = "user_1770452024" OR email = "user_1770452024@example.com"
+
+2026/02/07 16:13:45 [32m/home/javis/dev/appsite-go/internal/core/model/crud.go:36
+[0m[33m[1.577ms] [34;1m[rows:1][0m INSERT INTO `user_account` (`id`,`created_at`,`updated_at`,`saas_id`,`username`,`password`,`email`,`mobile`,`nickname`,`avatar`,`status`,`cover`,`description`,`introduce`,`birthday`,`gender`,`area_id`,`group_id`) VALUES ("2686d1b376d04c32979719d4326e7fa0",1770452025,1770452025,"","user_1770452024","$2a$10$Cw3XC4Dwxzc9cXDFrQjTCuPdccibBnajv3VxwOQIqI0yYAsEIZGpe","user_1770452024@example.com",NULL,"Test User","","enabled","","","",0,"private","1","100")
+{"level":"INFO","ts":"2026-02-07T16:13:45.383+0800","caller":"log/logger.go:48","msg":"HTTP Request","status":200,"method":"POST","path":"/api/v1/auth/register","query":"","ip":"::1","user-agent":"curl/8.5.0","cost":0.060798988}
+
+2026/02/07 16:13:45 [32m/home/javis/dev/appsite-go/internal/services/user/account/auth.go:82
+[0m[33m[0.287ms] [34;1m[rows:1][0m SELECT * FROM `user_account` WHERE username = "user_1770452024" OR email = "user_1770452024" OR mobile = "user_1770452024" ORDER BY `user_account`.`id` LIMIT 1
+{"level":"INFO","ts":"2026-02-07T16:13:45.453+0800","caller":"log/logger.go:48","msg":"HTTP Request","status":200,"method":"POST","path":"/api/v1/auth/login","query":"","ip":"::1","user-agent":"curl/8.5.0","cost":0.059045225}
+
+2026/02/07 16:13:45 [32m/home/javis/dev/appsite-go/internal/services/user/account/service.go:212
+[0m[33m[0.174ms] [34;1m[rows:1][0m SELECT * FROM `user_account` WHERE id = "2686d1b376d04c32979719d4326e7fa0" ORDER BY `user_account`.`id` LIMIT 1
+{"level":"INFO","ts":"2026-02-07T16:13:45.464+0800","caller":"log/logger.go:48","msg":"HTTP Request","status":200,"method":"GET","path":"/api/v1/account/profile","query":"","ip":"::1","user-agent":"curl/8.5.0","cost":0.000571274}
+
+2026/02/07 16:13:45 [32m/home/javis/dev/appsite-go/internal/services/user/account/service.go:140
+[0m[33m[0.171ms] [34;1m[rows:1][0m SELECT * FROM `user_account` WHERE id = "2686d1b376d04c32979719d4326e7fa0" ORDER BY `user_account`.`id` LIMIT 1
+
+2026/02/07 16:13:45 [32m/home/javis/dev/appsite-go/internal/services/user/account/service.go:206
+[0m[33m[1.092ms] [34;1m[rows:1][0m UPDATE `user_account` SET `description`="Integration test update",`gender`="male",`nickname`="Updated_1770452024",`updated_at`=1770452025 WHERE `id` = "2686d1b376d04c32979719d4326e7fa0"
+{"level":"INFO","ts":"2026-02-07T16:13:45.477+0800","caller":"log/logger.go:48","msg":"HTTP Request","status":200,"method":"PUT","path":"/api/v1/account/profile","query":"","ip":"::1","user-agent":"curl/8.5.0","cost":0.001495956}
+
+2026/02/07 16:13:45 [32m/home/javis/dev/appsite-go/internal/services/user/account/service.go:212
+[0m[33m[0.191ms] [34;1m[rows:1][0m SELECT * FROM `user_account` WHERE id = "2686d1b376d04c32979719d4326e7fa0" ORDER BY `user_account`.`id` LIMIT 1
+{"level":"INFO","ts":"2026-02-07T16:13:45.485+0800","caller":"log/logger.go:48","msg":"HTTP Request","status":200,"method":"GET","path":"/api/v1/account/profile","query":"","ip":"::1","user-agent":"curl/8.5.0","cost":0.000323647}
+{"level":"INFO","ts":"2026-02-07T16:13:45.493+0800","caller":"log/logger.go:48","msg":"Shutting down server..."}
+{"level":"INFO","ts":"2026-02-07T16:13:45.493+0800","caller":"log/logger.go:48","msg":"Server exiting"}

@@ -13,6 +13,7 @@ import (
 	"appsite-go/internal/core/model"
 	"appsite-go/internal/services/access/token"
 	"appsite-go/internal/services/access/verify"
+	"appsite-go/internal/services/user/dto"
 	"appsite-go/internal/services/user/entity"
 )
 
@@ -59,41 +60,18 @@ type RegisterInput struct {
 
 // Register creates a new user user
 func (s *AuthService) Register(input RegisterInput) (*entity.User, error) {
-	// 1. Check existence (Email or Username)
-	var count int64
-	s.db.Model(&entity.User{}).
-		Where("username = ? OR email = ?", input.Username, input.Email).
-		Count(&count)
-	
-	if count > 0 {
-		return nil, ErrUserExists
-	}
-
-	// 2. Hash Password
-	hashedPwd, err := s.pwd.Hash(input.Password)
-	if err != nil {
-		return nil, err
-	}
-
-	// 3. Create
-	user := &entity.User{
+	req := dto.UserCreateReq{
 		Username: input.Username,
 		Email:    input.Email,
 		Mobile:   input.Mobile,
-		Password: hashedPwd,
+		Password: input.Password,
 		Nickname: input.Nickname,
-		Status:   "enabled",
+		// Defaults handled in Add, but can specify here if different
+		Status:  "enabled",
+		GroupID: "100",
 	}
 
-	if res := s.repo.Add(user); !res.Success {
-		// Unwrap error if possible
-		if res.Error != nil {
-			return nil, res.Error
-		}
-		return nil, errors.New(res.Message)
-	}
-
-	return user, nil
+	return s.Add(req)
 }
 
 // Login verifies credentials and returns a token

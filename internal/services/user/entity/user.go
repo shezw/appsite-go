@@ -14,15 +14,23 @@ type User struct {
 	model.Tenant // SaasID
 
 	// Core Auth
-	Username string `gorm:"size:64;uniqueIndex;comment:Login username"`
-	Password string `gorm:"size:255;comment:Hashed password"`
-	Email    string `gorm:"size:64;uniqueIndex;comment:Login email"`
-	Mobile   string `gorm:"size:24;uniqueIndex;comment:Login mobile"`
+	Username string  `gorm:"size:64;uniqueIndex;comment:Login username"`
+	Password string  `gorm:"size:255;comment:Hashed password"`
+	Email    *string `gorm:"size:64;uniqueIndex;comment:Login email"`
+	Mobile   *string `gorm:"size:24;uniqueIndex;comment:Login mobile"`
 
 	// Profile Basic
 	Nickname string `gorm:"size:64"`
 	Avatar   string `gorm:"size:255"`
 	Status   string `gorm:"size:12;default:'enabled'"` // enabled, disabled
+
+	// Extended Profile
+	Cover       string `gorm:"size:255;comment:Cover URL"`
+	Description string `gorm:"size:255;comment:Short description"`
+	Introduce   string `gorm:"type:text;comment:Rich text introduction"`
+	Birthday    int64  `gorm:"comment:Birthday timestamp"`
+	Gender      string `gorm:"size:16;default:'private';comment:female/male/private"`
+	AreaID      string `gorm:"size:32;default:'1';comment:Area ID"`
 	
 	// Relations
 	GroupID string `gorm:"size:32;default:'100'"`

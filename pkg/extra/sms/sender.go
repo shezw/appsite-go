@@ -6,7 +6,6 @@ package sms
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 )
 

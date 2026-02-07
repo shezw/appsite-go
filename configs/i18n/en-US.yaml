@@ -1,0 +1,10 @@
+common:
+  success: "Success"
+  error: "Error"
+  unauthorized: "Unauthorized"
+  
+auth:
+  login_success: "Login successful"
+  register_success: "Registration successful"
+  user_exists: "User already exists"
+  invalid_password: "Invalid password"

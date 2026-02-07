@@ -18,3 +18,6 @@ coverage:
 
 clean:
 	rm -rf bin/ coverage.out
+
+test-api: build
+	@nohup ./bin/$(APP_NAME) > server.log 2>&1 & echo $$! | ./tests/scripts/test_apis.sh
