@@ -298,6 +298,21 @@ else
     echo "Response: $FAIL_LOGIN_RES"
 fi
 
+# --- Admin UI Tests ---
+echo -e "\n--- Admin UI Content ---"
+
+# 15. Test Menu Config
+echo -e "\n15. Testing Admin Menu Config..."
+MENU_RES=$(curl -s -X GET "${ADMIN_URL}/menu")
+echo "$MENU_RES" | grep "dashboard" > /dev/null
+check_status $? "Menu Endpoint (Dashboard item found)"
+
+# 16. Test Admin HTML Serving
+echo -e "\n16. Testing Admin HTML..."
+HTML_RES=$(curl -s -X GET "http://localhost:8080/admin")
+echo "$HTML_RES" | grep "<title>Appsite Admin</title>" > /dev/null
+check_status $? "Admin Index HTML Served"
+
 echo "----------------------------------------"
 echo "All Tests Completed Successfully"
 echo "----------------------------------------"

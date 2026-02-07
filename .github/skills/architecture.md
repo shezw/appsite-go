@@ -99,7 +99,33 @@ appsite-go/
 - **Dependency Injection**: Use a wire/DI framework or manual injection in `cmd/` to wire up services.
 - **Configurability**: Ensure `Core -> Setting` can load config from efficient sources (Env vars, Consol, Etcd) for diverse environments.
 
-## 4. Module Specifications
+## 4. Frontend Architecture
+
+### Admin Panel (Management)
+- **Role**: Backend Management System for Admin Users.
+- **Technology**: Single Page Application (SPA).
+- **Framework**: React.js (with Ant Design Pro or generic scaffold).
+- **Interaction**: Consumes RESTful APIs from `internal/admin/*`.
+- **Deployment**:
+  - Source code resides in `web/admin`.
+  - Build artifacts (HTML/CSS/JS) are embedded into the Go binary using `embed`.
+  - Served via a static file server middleware in `cmd/appsite-monolith`.
+
+### Web Site (Content Presentation)
+- **Role**: Public facing website (CMS, Blog, Portal).
+- **Requirements**: High SEO (SSR), Interactivity (SPA), Configurable rendering.
+- **Framework**: Next.js (React).
+- **Rendering Strategy**: Application supports hybrid rendering modes configurable per page type:
+  - **ISR (Incremental Static Regeneration)**: For high-traffic public content (Articles, Lists).
+  - **SSR (Server-Side Rendering)**: For dynamic pages requiring SEO (User Profiles).
+  - **CSR (Client-Side Rendering)**: For user-specific interactive dashboards.
+- **Architecture**:
+  - **Headless CMS Pattern**: Next.js acts as the "Head", fetching data from the "Headless" Go API (`internal/apis/*`).
+  - **Deployment**:
+    - **Mode A (Node.js)**: Deployed as a standalone Node.js server for full SSR/ISR capabilities.
+    - **Mode B (Static Export)**: Exported as static HTML/JS and embedded in Go binary (loses ISR/SSR, degrade to CSR).
+
+## 5. Module Specifications
 
 ### Core
 Crucial for system stability. `Error` and `Log` packages must be established first to be used everywhere.

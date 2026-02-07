@@ -13,6 +13,7 @@ type Config struct {
 	Database DatabaseConfig `mapstructure:"database"`
 	Redis    RedisConfig    `mapstructure:"redis"`
 	Log      LogConfig      `mapstructure:"log"`
+	AdminMenu string        `mapstructure:"admin_menu"` // JSON string
 }
 
 type AppConfig struct {

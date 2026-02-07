@@ -4,13 +4,16 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"appsite-go/internal/admin/auth"
+	"appsite-go/internal/admin/system"
 	"appsite-go/internal/admin/user"
 	"appsite-go/internal/services/user/account"
+	"appsite-go/internal/core/setting"
 )
 
 // Container holds dependencies for admin handlers
 type Container struct {
 	AuthSvc *account.AuthService
+	Config  *setting.Config
 }
 
 // RegisterRoutes registers admin routes
@@ -33,5 +36,10 @@ func RegisterRoutes(r *gin.Engine, c *Container) {
 			g.GET("/:id", h.GetUserDetail)
 			g.PUT("/:id", h.UpdateUser)
 		}
+	}
+	// System & Config
+	if c.Config != nil {
+		h := system.NewHandler(c.Config)
+		v1.GET("/menu", h.GetMenu)
 	}
 }

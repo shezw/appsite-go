@@ -29,3 +29,42 @@ redis:
 log:
   level: "debug"
   format: "json" # json or console
+
+admin_menu: |
+  [
+    {
+      "key": "dashboard",
+      "label": "Dashboard",
+      "icon": "IconDashboard",
+      "path": "/dashboard",
+      "roles": ["all"]
+    },
+    {
+      "key": "user",
+      "label": "User Management",
+      "icon": "IconUsers",
+      "roles": ["admin"],
+      "children": [
+        {
+          "key": "user-list",
+          "label": "User List",
+          "path": "/users",
+          "roles": ["admin"]
+        }
+      ]
+    },
+    {
+      "key": "content",
+      "label": "Content",
+      "icon": "IconFileText",
+      "roles": ["admin", "editor"],
+      "children": [
+        {
+          "key": "article-list",
+          "label": "Articles",
+          "path": "/articles",
+          "roles": ["admin", "editor"]
+        }
+      ]
+    }
+  ]

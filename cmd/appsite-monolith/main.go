@@ -10,10 +10,12 @@ import (
 "time"
 
 "github.com/alicebob/miniredis/v2"
+"github.com/gin-gonic/gin"
 goredis "github.com/redis/go-redis/v9"
 
-"appsite-go/internal/apis"
-"appsite-go/internal/admin"
+	"appsite-go/internal/admin"
+	"appsite-go/internal/admin/ui"
+	"appsite-go/internal/apis"
 "appsite-go/internal/core/log"
 "appsite-go/internal/core/route"
 "appsite-go/internal/core/setting"
@@ -104,14 +106,22 @@ authSvc := account.NewAuthService(db, tokenSvc, otpSvc)
 	// Initialize Admin Container
 	adminContainer := &admin.Container{
 		AuthSvc: authSvc,
+		Config:  cfg,
 	}
 
 	// 7. Setup Router
 	r := route.NewEngine(cfg)
 	apis.RegisterRoutes(r, container)
-	admin.RegisterRoutes(r, adminContainer) 
+	admin.RegisterRoutes(r, adminContainer)
+    
+    // Serve Admin Logic (JSX + Babel Standalone)
+    r.GET("/admin", func(c *gin.Context) {
+        c.Data(200, "text/html; charset=utf-8", []byte(ui.AdminShellHTML))
+    })
+    // Serve the source code for the browser to fetch
+    r.Static("/admin-assets", "./web/admin")
 
-// 8. Run Server
+	// 8. Run Server
 serverAddr := fmt.Sprintf(":%d", cfg.Server.Port)
 srv := &http.Server{
 Addr:    serverAddr,

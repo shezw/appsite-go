@@ -107,9 +107,11 @@ This document tracks the development progress of the Appsite Go framework.
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
 | 7.1 | `internal/admin/auth` | `handler.go` | Completed | **Admin Auth**: Login. | Low | [x] | [x] | 80% |
 | 7.2 | `internal/admin/user` | `handler.go` | Completed | **User**: Manage Users (List, Detail, Ban). | Med | [x] | [x] | 80% |
-| 7.3 | `internal/admin/contents`| `handler.go` | Pending | **Content**: Manage Articles, Categories. | Med | [ ] | [ ] | 0% |
-| 7.4 | `internal/admin/commerce`| `handler.go` | Pending | **Commerce**: Product, Order, Coupons. | High | [ ] | [ ] | 0% |
-| 7.5 | `internal/admin/system` | `handler.go` | Pending | **System**: Config, Database, Install. | Med | [ ] | [ ] | 0% |
+| 7.3 | `internal/admin/system` | `handler.go` | Completed | **System**: Menu Config & Init. | Low | [x] | [x] | 80% |
+| 7.4 | `internal/admin/ui` | `shell.go` | Completed | **Frontend**: SPA Shell (React/Mantine/CDN) + Login. | Med | [x] | [x] | 0% |
+| 7.5 | `web/admin/src` | `App.jsx` | Completed | **Frontend**: Layout & Dynamic Menu (from JSON) & UserList. | High | [x] | [x] | 0% |
+| 7.6 | `internal/admin/contents`| `handler.go` | Pending | **Content**: Manage Articles, Categories. | Med | [ ] | [ ] | 0% |
+| 7.7 | `internal/admin/commerce`| `handler.go` | Pending | **Commerce**: Product, Order, Coupons. | High | [ ] | [ ] | 0% |
 
 ---
 
@@ -119,3 +121,15 @@ This document tracks the development progress of the Appsite Go framework.
 | ID | Module Path | Feature / File | Status | Description | Diff | Test | Pass | Cov |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
 | 8.1 | `cmd/appsite-monolith` | `main.go` | Completed | Dependency Injection (Wire). Start HTTP Server. | Med | [x] | [x] | 0% |
+
+---
+
+## Technical Debt & TODOs
+*Goal: Track remaining tasks marked in code.*
+
+| Type | Module Path | File | Description | Status |
+|:---|:---|:---|:---|:---|
+| TODO | `internal/admin` | `router.go` | Add Admin Middleware (Route Protection). | Pending |
+| TODO | `internal/apis/redirect` | `handler.go` | Implement WeChat OAuth callback logic. | Pending |
+| TODO | `internal/apis/redirect` | `handler.go` | Implement OSS Callback logic. | Pending |
+| TODO | `internal/apis/content` | `handler.go` | Assign AuthorID from context (Auth). | Pending |
