@@ -98,7 +98,7 @@ This document tracks the development progress of the Appsite Go framework.
 | 6.2 | `internal/apis/auth` | `handler.go` | Completed | **Auth**: Login (Pwd/Bypass), Register, Change Password. | Low | [x] | [x] | 90% |
 | 6.3 | `internal/apis/account`| `handler.go` | Completed | **Account**: Update Profile, Get Detail, List. | Low | [x] | [x] | 85% |
 | 6.4 | `internal/apis/content`| `handler.go` | Completed | **Content**: Article/Banner CRUD. | Med | [x] | [x] | 80% |
-| 6.5 | `internal/apis/redirect`| `handler.go` | Pending | **Redirect**: WeChat Login, OSS Callback. | Med | [ ] | [ ] | 0% |
+| 6.5 | `internal/apis/redirect`| `handler.go` | Completed | **Redirect**: WeChat Login, OSS Callback. | Med | [x] | [x] | 80% |
 
 ## Phase 7: Presentation (Admin)
 *Goal: Admin Management Panel APIs.*
@@ -106,7 +106,7 @@ This document tracks the development progress of the Appsite Go framework.
 | ID | Module Path | Feature / File | Status | Description | Diff | Test | Pass | Cov |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
 | 7.1 | `internal/admin/auth` | `handler.go` | Completed | **Admin Auth**: Login. | Low | [x] | [x] | 80% |
-| 7.2 | `internal/admin/user` | `handler.go` | Pending | **User**: Manage Users (List, Detail, Ban). | Med | [ ] | [ ] | 0% |
+| 7.2 | `internal/admin/user` | `handler.go` | Completed | **User**: Manage Users (List, Detail, Ban). | Med | [x] | [x] | 80% |
 | 7.3 | `internal/admin/contents`| `handler.go` | Pending | **Content**: Manage Articles, Categories. | Med | [ ] | [ ] | 0% |
 | 7.4 | `internal/admin/commerce`| `handler.go` | Pending | **Commerce**: Product, Order, Coupons. | High | [ ] | [ ] | 0% |
 | 7.5 | `internal/admin/system` | `handler.go` | Pending | **System**: Config, Database, Install. | Med | [ ] | [ ] | 0% |

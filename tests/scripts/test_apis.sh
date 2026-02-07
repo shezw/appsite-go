@@ -207,6 +207,97 @@ else
     echo "Response: $LIST_ART_RES"
 fi
 
+# 9. Test WeChat Callback (Mock)
+echo -e "\n9. Testing WeChat Callback..."
+WECHAT_RES=$(curl -s -X GET "${API_URL}/callback/wechat")
+echo "$WECHAT_RES" | grep "mock_wechat_ok" > /dev/null
+check_status $? "WeChat Callback Response"
+
+# 10. Test OSS Callback (Mock)
+echo -e "\n10. Testing OSS Callback..."
+OSS_RES=$(curl -s -X POST "${API_URL}/callback/oss")
+echo "$OSS_RES" | grep "mock_oss_ok" > /dev/null
+check_status $? "OSS Callback Response"
+
+# --- Admin Tests ---
+ADMIN_URL="http://localhost:8080/admin/v1"
+
+echo -e "\n--- Admin Tests ---"
+
+# 11. Admin Login
+echo -e "\n11. Testing Admin Login..."
+ADMIN_LOGIN_RES=$(curl -s -X POST "${ADMIN_URL}/login" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"username\": \"$USERNAME\",
+    \"password\": \"$PASSWORD\"
+  }")
+
+ADMIN_TOKEN=$(echo $ADMIN_LOGIN_RES | jq -r '.data.token')
+
+if [ "$ADMIN_TOKEN" != "null" ] && [ -n "$ADMIN_TOKEN" ]; then
+    echo -e "${GREEN}[PASS]${NC} Admin Login Successful. Token: ${ADMIN_TOKEN:0:10}..."
+else
+    echo -e "${RED}[FAIL]${NC} Admin Login Failed"
+    echo "Response: $ADMIN_LOGIN_RES"
+    exit 1
+fi
+
+# 12. Admin List Users
+echo -e "\n12. Testing Admin List Users..."
+ADMIN_LIST_RES=$(curl -s -X GET "${ADMIN_URL}/users" \
+  -H "Authorization: Bearer $ADMIN_TOKEN")
+
+ADMIN_LIST_COUNT=$(echo $ADMIN_LIST_RES | jq -r '.data.total')
+
+if [[ "$ADMIN_LIST_COUNT" =~ ^[0-9]+$ ]] && [ "$ADMIN_LIST_COUNT" -ge 1 ]; then
+    echo -e "${GREEN}[PASS]${NC} Admin List Users (Total: $ADMIN_LIST_COUNT)"
+else
+    echo -e "${RED}[FAIL]${NC} Admin List Users failed"
+    echo "Response: $ADMIN_LIST_RES"
+fi
+
+# Get User ID (using the created user's username to find ID from list)
+# We need to filter the list to find the UID of our user, or just assume first user for this test if clean DB
+# With parallelism or persistence it might change.
+# jq select .username == $USERNAME
+TARGET_UID=$(echo $ADMIN_LIST_RES | jq -r ".data.list[] | select(.username == \"$USERNAME\") | .uid")
+
+if [ -z "$TARGET_UID" ]; then
+    echo "Cannot find UID for $USERNAME"
+    TARGET_UID=$(echo $ADMIN_LIST_RES | jq -r '.data.list[0].uid')
+fi
+
+# 13. Admin Ban User
+echo -e "\n13. Testing Admin Ban User ($TARGET_UID)..."
+BAN_RES=$(curl -s -X PUT "${ADMIN_URL}/users/$TARGET_UID" \
+  -H "Authorization: Bearer $ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"status\": \"disabled\"
+  }")
+
+echo "$BAN_RES" | grep "success" > /dev/null
+check_status $? "Ban User Response"
+
+# 14. Verify Login Fails
+echo -e "\n14. Verifying Login Fails for Banned User..."
+FAIL_LOGIN_RES=$(curl -s -X POST "${API_URL}/auth/login" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"identifier\": \"$USERNAME\",
+    \"password\": \"$PASSWORD\"
+  }")
+
+FAIL_CODE=$(echo $FAIL_LOGIN_RES | jq -r '.code') 
+
+if [ "$FAIL_CODE" != "0" ] && [ "$FAIL_CODE" != "null" ]; then
+    echo -e "${GREEN}[PASS]${NC} Login Failed as expected (Code: $FAIL_CODE)."
+else
+    echo -e "${RED}[FAIL]${NC} Banned user was able to login (or code 0)!"
+    echo "Response: $FAIL_LOGIN_RES"
+fi
+
 echo "----------------------------------------"
 echo "All Tests Completed Successfully"
 echo "----------------------------------------"

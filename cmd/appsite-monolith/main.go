@@ -13,6 +13,7 @@ import (
 goredis "github.com/redis/go-redis/v9"
 
 "appsite-go/internal/apis"
+"appsite-go/internal/admin"
 "appsite-go/internal/core/log"
 "appsite-go/internal/core/route"
 "appsite-go/internal/core/setting"
@@ -100,10 +101,15 @@ authSvc := account.NewAuthService(db, tokenSvc, otpSvc)
 		BannerSvc:  bannerSvc,
 	}
 
-// 7. Setup Router
-r := route.NewEngine(cfg)
-apis.RegisterRoutes(r, container)
-// admin.RegisterRoutes(r, adminContainer) 
+	// Initialize Admin Container
+	adminContainer := &admin.Container{
+		AuthSvc: authSvc,
+	}
+
+	// 7. Setup Router
+	r := route.NewEngine(cfg)
+	apis.RegisterRoutes(r, container)
+	admin.RegisterRoutes(r, adminContainer) 
 
 // 8. Run Server
 serverAddr := fmt.Sprintf(":%d", cfg.Server.Port)

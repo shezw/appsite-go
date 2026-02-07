@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"appsite-go/internal/admin/auth"
+	"appsite-go/internal/admin/user"
 	"appsite-go/internal/services/user/account"
 )
 
@@ -22,5 +23,15 @@ func RegisterRoutes(r *gin.Engine, c *Container) {
 		v1.POST("/login", h.Login)
 	}
 
-	// TODO: Add protected routes with Admin Middleware
+	// Users
+	if c.AuthSvc != nil {
+		h := user.NewHandler(c.AuthSvc)
+		// TODO: Add Admin Middleware here
+		g := v1.Group("/users")
+		{
+			g.GET("", h.ListUsers)
+			g.GET("/:id", h.GetUserDetail)
+			g.PUT("/:id", h.UpdateUser)
+		}
+	}
 }
