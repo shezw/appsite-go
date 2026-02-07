@@ -152,6 +152,61 @@ else
     echo "Res: $PROFILE_RES_2"
 fi
 
+# 6. List Users
+echo -e "\n6. Testing List Users..."
+LIST_RES=$(curl -s -X GET "${API_URL}/users?page=1&page_size=10" \
+  -H "Authorization: Bearer $TOKEN")
+
+LIST_COUNT=$(echo $LIST_RES | jq -r '.data.total')
+LIST_FIRST_USER=$(echo $LIST_RES | jq -r '.data.list[0].username')
+
+# Note: LIST_COUNT might be treated as string by shell comparisons if not careful, but -gt handles integers.
+# jq output for total might be null if failed.
+if [[ "$LIST_COUNT" =~ ^[0-9]+$ ]] && [ "$LIST_COUNT" -ge 1 ]; then
+    echo -e "${GREEN}[PASS]${NC} List Users (Total: $LIST_COUNT, First: $LIST_FIRST_USER)"
+else
+    echo -e "${RED}[FAIL]${NC} List Users failed or empty"
+    echo "Response: $LIST_RES"
+    exit 1
+fi
+
+# 7. Create Article
+echo -e "\n7. Testing Create Article..."
+random_suffix=$(date +%s)
+ARTICLE_RES=$(curl -s -X POST "${API_URL}/content/articles" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"title\": \"My First Article $random_suffix\",
+    \"content\": \"This is the content\",
+    \"status\": \"enabled\"
+  }")
+
+ARTICLE_ID=$(echo $ARTICLE_RES | jq -r '.data.id')
+
+if [ "$ARTICLE_ID" != "null" ] && [ -n "$ARTICLE_ID" ]; then
+    echo -e "${GREEN}[PASS]${NC} Create Article (ID: $ARTICLE_ID)"
+else
+    echo -e "${RED}[FAIL]${NC} Create Article Failed"
+    echo "Response: $ARTICLE_RES"
+    exit 1
+fi
+
+# 8. List Articles (Public? or Protected?)
+# In router we registered /content/articles as public/protected depending on method?
+# GET /content/articles is in public block in router.go
+echo -e "\n8. Testing List Articles (Public)..."
+LIST_ART_RES=$(curl -s -X GET "${API_URL}/content/articles")
+
+LIST_ART_COUNT=$(echo $LIST_ART_RES | jq -r '.data.total')
+
+if [[ "$LIST_ART_COUNT" =~ ^[0-9]+$ ]] && [ "$LIST_ART_COUNT" -ge 1 ]; then
+    echo -e "${GREEN}[PASS]${NC} List Articles (Total: $LIST_ART_COUNT)"
+else
+    echo -e "${RED}[FAIL]${NC} List Articles failed or empty"
+    echo "Response: $LIST_ART_RES"
+fi
+
 echo "----------------------------------------"
 echo "All Tests Completed Successfully"
 echo "----------------------------------------"

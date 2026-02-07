@@ -18,6 +18,7 @@ goredis "github.com/redis/go-redis/v9"
 "appsite-go/internal/core/setting"
 "appsite-go/internal/services/access/token"
 "appsite-go/internal/services/access/verify"
+"appsite-go/internal/services/contents"
 "appsite-go/internal/services/user/account"
 "appsite-go/pkg/utils/orm"
 appsite_redis "appsite-go/pkg/utils/redis"
@@ -87,11 +88,16 @@ authSvc := account.NewAuthService(db, tokenSvc, otpSvc)
 // ... Init other services here ...
 
 // 6. Initialize API Container
+	// Content Services
+	articleSvc := contents.NewArticleService(db)
+	bannerSvc := contents.NewBannerService(db)
+
 	// 6. Initialize API Container
 	container := &apis.Container{
-		TokenSvc: tokenSvc,
-		AuthSvc:  authSvc,
-		// ... Inject other services ...
+		TokenSvc:   tokenSvc,
+		AuthSvc:    authSvc,
+		ArticleSvc: articleSvc,
+		BannerSvc:  bannerSvc,
 	}
 
 // 7. Setup Router

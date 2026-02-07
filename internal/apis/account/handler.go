@@ -2,6 +2,7 @@ package account
 
 import (
 	"github.com/gin-gonic/gin"
+	"strconv"
 
 	"appsite-go/internal/apis/middleware"
 	"appsite-go/internal/apis/response"
@@ -55,4 +56,39 @@ func (h *Handler) UpdateProfile(c *gin.Context) {
 	}
 
 	response.Success(c, nil)
+}
+
+// ListUsers retrieves users based on filter
+func (h *Handler) ListUsers(c *gin.Context) {
+	var req dto.UserFilterReq
+	if err := c.ShouldBindQuery(&req); err != nil {
+		response.Error(c, err)
+		return
+	}
+
+	// Pagination
+	page := 1
+	pageSize := 20
+	
+	if p := c.Query("page"); p != "" {
+		if v, err := strconv.Atoi(p); err == nil && v > 0 {
+			page = v
+		}
+	}
+	if ps := c.Query("page_size"); ps != "" {
+		if v, err := strconv.Atoi(ps); err == nil && v > 0 {
+			pageSize = v
+		}
+	}
+
+	users, count, err := h.svc.ListUsers(req, page, pageSize)
+	if err != nil {
+		response.Error(c, err)
+		return
+	}
+
+	response.Success(c, gin.H{
+		"list":  users,
+		"total": count,
+	})
 }

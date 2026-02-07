@@ -96,8 +96,8 @@ This document tracks the development progress of the Appsite Go framework.
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
 | 6.1 | `internal/core/route` | `engine.go`<br>`middleware.go` | Completed | Gin Framework setup, SaaS Middleware, Logger Middleware. | Med | [x] | [x] | 80% |
 | 6.2 | `internal/apis/auth` | `handler.go` | Completed | **Auth**: Login (Pwd/Bypass), Register, Change Password. | Low | [x] | [x] | 90% |
-| 6.3 | `internal/apis/account`| `handler.go` | Pending | **Account**: Update Profile, Get Detail, List. | Low | [ ] | [ ] | 0% |
-| 6.4 | `internal/apis/content`| `handler.go` | Pending | **Content**: Article/Banner CRUD. | Med | [ ] | [ ] | 0% |
+| 6.3 | `internal/apis/account`| `handler.go` | Completed | **Account**: Update Profile, Get Detail, List. | Low | [x] | [x] | 85% |
+| 6.4 | `internal/apis/content`| `handler.go` | Completed | **Content**: Article/Banner CRUD. | Med | [x] | [x] | 80% |
 | 6.5 | `internal/apis/redirect`| `handler.go` | Pending | **Redirect**: WeChat Login, OSS Callback. | Med | [ ] | [ ] | 0% |
 
 ## Phase 7: Presentation (Admin)
