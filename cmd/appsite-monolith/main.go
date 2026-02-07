@@ -105,8 +105,10 @@ authSvc := account.NewAuthService(db, tokenSvc, otpSvc)
 
 	// Initialize Admin Container
 	adminContainer := &admin.Container{
-		AuthSvc: authSvc,
-		Config:  cfg,
+		AuthSvc:    authSvc,
+		ArticleSvc: articleSvc,
+		BannerSvc:  bannerSvc,
+		Config:     cfg,
 	}
 
 	// 7. Setup Router

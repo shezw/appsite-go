@@ -110,7 +110,7 @@ This document tracks the development progress of the Appsite Go framework.
 | 7.3 | `internal/admin/system` | `handler.go` | Completed | **System**: Menu Config & Init. | Low | [x] | [x] | 80% |
 | 7.4 | `internal/admin/ui` | `shell.go` | Completed | **Frontend**: SPA Shell (React/Mantine/CDN) + Login. | Med | [x] | [x] | 0% |
 | 7.5 | `web/admin/src` | `App.jsx` | Completed | **Frontend**: Layout & Dynamic Menu (from JSON) & UserList. | High | [x] | [x] | 0% |
-| 7.6 | `internal/admin/contents`| `handler.go` | Pending | **Content**: Manage Articles, Categories. | Med | [ ] | [ ] | 0% |
+| 7.6 | `internal/admin/contents`| `handler.go` | Completed | **Content**: Manage Articles, Categories. | Med | [x] | [x] | 80% |
 | 7.7 | `internal/admin/commerce`| `handler.go` | Pending | **Commerce**: Product, Order, Coupons. | High | [ ] | [ ] | 0% |
 
 ---

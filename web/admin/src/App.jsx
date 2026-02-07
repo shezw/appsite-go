@@ -22,7 +22,7 @@ const Login = ({ onLogin }) => {
     const handleSubmit = async () => {
         try {
             const res = await axios.post('/admin/v1/login', { username, password });
-            if (res.data.code === 0) {
+            if (res.data.code === 200) {
                 onLogin(res.data.data.token);
             } else {
                 setError(res.data.msg);
@@ -55,7 +55,7 @@ const UserList = ({ token }) => {
         setLoading(true);
         try {
             const res = await axios.get('/admin/v1/users', { headers: { Authorization: `Bearer ${token}` } });
-            if (res.data.code === 0) {
+            if (res.data.code === 200) {
                 setData(res.data.data.list);
             }
         } catch (e) { console.error(e); }
@@ -101,6 +101,74 @@ const UserList = ({ token }) => {
     );
 };
 
+const ArticleList = ({ token }) => {
+    const [data, setData] = React.useState([]);
+    const [loading, setLoading] = React.useState(false);
+    const [page, setPage] = React.useState(1);
+
+    const fetchArticles = async () => {
+        setLoading(true);
+        try {
+            const res = await axios.get(`/admin/v1/contents/articles?page=${page}&size=10`, { headers: { Authorization: `Bearer ${token}` } });
+            if (res.data.code === 200) {
+                setData(res.data.data.list || []);
+            }
+        } catch (e) { console.error(e); }
+        setLoading(false);
+    };
+
+    React.useEffect(() => { fetchArticles(); }, [page]);
+
+    const handleDelete = async (id) => {
+        if (!confirm('Are you sure you want to delete this article?')) return;
+        try {
+            await axios.delete(`/admin/v1/contents/articles/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+            fetchArticles();
+        } catch (e) { alert('Failed to delete'); }
+    };
+
+    const rows = data.map((item) => (
+        <tr key={item.id}>
+            <td>{item.id.substring(0,8)}...</td>
+            <td>{item.title}</td>
+            <td>{item.author_id}</td>
+            <td><Badge color={item.status === 'enabled' ? 'green' : 'gray'}>{item.status}</Badge></td>
+            <td>{item.created_at ? new Date(item.created_at).toLocaleDateString() : '-'}</td>
+            <td>
+                <Group spacing="xs">
+                    <Button variant="subtle" size="xs" onClick={() => alert('Edit not implemented yet')}>Edit</Button>
+                    <Button variant="subtle" color="red" size="xs" onClick={() => handleDelete(item.id)}>Delete</Button>
+                </Group>
+            </td>
+        </tr>
+    ));
+
+    return (
+        <Box pos="relative">
+            <LoadingOverlay visible={loading} overlayBlur={2} />
+            <Group position="apart" mb="md">
+                <Title order={3}>Articles</Title>
+                <Button onClick={fetchArticles} size="xs" variant="outline">Refresh</Button>
+            </Group>
+            <Paper shadow="xs" p="md">
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th />
+                        </tr>
+                    </thead>
+                    <tbody>{rows}</tbody>
+                </Table>
+            </Paper>
+        </Box>
+    );
+};
+
 const Dashboard = () => {
     return (
         <Container>
@@ -118,7 +186,7 @@ const MainLayout = ({ token, onLogout }) => {
 
     React.useEffect(() => {
         axios.get('/admin/v1/menu').then(res => {
-            if (res.data.code === 0) setMenuItems(res.data.data);
+            if (res.data.code === 200) setMenuItems(res.data.data);
         });
     }, []);
 
@@ -144,7 +212,8 @@ const MainLayout = ({ token, onLogout }) => {
         switch(page) {
             case 'dashboard': return <Dashboard />;
             case 'user-list': return <UserList token={token} />;
-            default: return <Text>Page not found or pending implementation</Text>;
+            case 'article-list': return <ArticleList token={token} />;
+            default: return <Text>Page not found or pending implementation: {page}</Text>;
         }
     };
 

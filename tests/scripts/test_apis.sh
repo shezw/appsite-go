@@ -298,6 +298,20 @@ else
     echo "Response: $FAIL_LOGIN_RES"
 fi
 
+# 14. Admin List Articles
+echo -e "\n14. Testing Admin List Articles..."
+ADMIN_ARTICLES_RES=$(curl -s -X GET "${ADMIN_URL}/contents/articles" \
+  -H "Authorization: Bearer $ADMIN_TOKEN")
+
+ADMIN_ARTICLES_TOTAL=$(echo $ADMIN_ARTICLES_RES | jq -r '.data.total')
+
+if [[ "$ADMIN_ARTICLES_TOTAL" =~ ^[0-9]+$ ]]; then
+    echo -e "${GREEN}[PASS]${NC} Admin List Articles (Total: $ADMIN_ARTICLES_TOTAL)"
+else
+    echo -e "${RED}[FAIL]${NC} Admin List Articles failed"
+    echo "Response: $ADMIN_ARTICLES_RES"
+fi
+
 # --- Admin UI Tests ---
 echo -e "\n--- Admin UI Content ---"
 
