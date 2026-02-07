@@ -7,6 +7,7 @@ import (
 	"appsite-go/internal/apis/auth"
 	"appsite-go/internal/apis/content"
 	"appsite-go/internal/apis/middleware"
+	"appsite-go/internal/apis/redirect"
 	"appsite-go/internal/services/access/token"
 	"appsite-go/internal/services/contents"
 	account_svc "appsite-go/internal/services/user/account"
@@ -74,5 +75,13 @@ func RegisterRoutes(r *gin.Engine, c *Container) {
 			p.DELETE("/articles/:id", h.DeleteArticle)
 			p.POST("/banners", h.CreateBanner)
 		}
+	}
+
+	// Callback Routes
+	{
+		h := redirect.NewHandler()
+		g := v1.Group("/callback")
+		g.GET("/wechat", h.WechatCallback)
+		g.POST("/oss", h.OSSCallback)
 	}
 }

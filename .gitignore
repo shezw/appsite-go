@@ -1,1 +1,27 @@
-author.md
+# Binaries
+bin/
+*.exe
+*.dll
+*.so
+appsite-monolith
+
+# Database
+*.db
+*.sqlite
+
+# Logs
+*.log
+logs/
+
+# Test Coverage
+*.out
+coverage.html
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
